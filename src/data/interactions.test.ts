@@ -28,4 +28,10 @@ describe('앵커 KB', () => {
       expect(SUPPLEMENTS).toContain(e.supplement)
     }
   })
+
+  it('KB 엔트리 id가 중복 없이 고유하다', () => {
+    const valid = validateKb(kb)
+    const ids = valid.map((e) => e.id)
+    expect(new Set(ids).size).toBe(ids.length)
+  })
 })
