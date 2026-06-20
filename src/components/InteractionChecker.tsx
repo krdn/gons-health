@@ -32,7 +32,13 @@ export function InteractionChecker() {
         <label>
           처방약 클래스
           <br />
-          <select value={drugClass} onChange={(e) => setDrugClass(e.target.value)}>
+          <select
+            value={drugClass}
+            onChange={(e) => {
+              setDrugClass(e.target.value)
+              setResult(null)
+            }}
+          >
             <option value="">— 선택 —</option>
             {DRUG_CLASSES.map((c) => (
               <option key={c} value={c}>
@@ -44,7 +50,13 @@ export function InteractionChecker() {
         <label>
           추천 건기식/식품
           <br />
-          <select value={supplement} onChange={(e) => setSupplement(e.target.value)}>
+          <select
+            value={supplement}
+            onChange={(e) => {
+              setSupplement(e.target.value)
+              setResult(null)
+            }}
+          >
             <option value="">— 선택 —</option>
             {SUPPLEMENTS.map((s) => (
               <option key={s} value={s}>
