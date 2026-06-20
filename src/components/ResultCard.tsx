@@ -1,4 +1,5 @@
 import type { LookupResult, InteractionEntry, Severity, ActionType } from '../types'
+import { ABSTAIN_MESSAGE } from '../lib/lookup'
 
 const SEVERITY_LABEL: Record<Severity, string> = {
   high: '🔴 높음',
@@ -41,7 +42,10 @@ function EntryCard({ entry }: { entry: InteractionEntry }) {
 }
 
 export function ResultCard({ result }: { result: LookupResult }) {
-  if (result.kind === 'abstain') {
+  const shouldShowAbstain = result.kind === 'abstain' || (result.kind === 'hit' && result.entries.length === 0)
+
+  if (shouldShowAbstain) {
+    const message = result.kind === 'abstain' ? result.message : ABSTAIN_MESSAGE
     return (
       <div
         style={{
@@ -52,10 +56,11 @@ export function ResultCard({ result }: { result: LookupResult }) {
           color: '#444',
         }}
       >
-        {result.message}
+        {message}
       </div>
     )
   }
+
   return (
     <div>
       {result.entries.map((e) => (
