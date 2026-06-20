@@ -1,0 +1,192 @@
+[
+  {
+    "id": "anticoag-ginkgo-001",
+    "drug_class": "항응고제/항혈소판제",
+    "drug_ingredient": ["warfarin", "apixaban", "aspirin", "clopidogrel"],
+    "supplement": "은행 (Ginkgo biloba)",
+    "severity": "high",
+    "action_type": "avoid",
+    "mechanism": "혈소판 응집 억제 및 항응고 효과 상가작용으로 출혈 위험 증가",
+    "recommendation": "병용 시 출혈 위험 증가. 환자에게 권하지 말 것. 이미 복용 중이면 멍·출혈 징후 모니터링 및 처방의 상담.",
+    "evidence_level": "중",
+    "source": {
+      "db": "PMC",
+      "id": "PMID:18205318",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18205318/",
+      "retrieved_date": "2026-06-21",
+      "quote": "Ginkgo may increase bleeding risk when combined with anticoagulant/antiplatelet agents."
+    },
+    "last_reviewed": "2026-06-21"
+  },
+  {
+    "id": "anticoag-danshen-001",
+    "drug_class": "항응고제/항혈소판제",
+    "drug_ingredient": ["warfarin"],
+    "supplement": "단삼 (Danshen)",
+    "severity": "high",
+    "action_type": "avoid",
+    "mechanism": "단삼이 와파린 대사·항응고 효과를 증강하여 출혈 위험 및 INR 상승",
+    "recommendation": "병용 시 출혈 위험 증가. 권하지 말 것. 복용 중이면 INR 모니터링 및 처방의 상담.",
+    "evidence_level": "중",
+    "source": {
+      "db": "PMC",
+      "id": "PMID:11304750",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11304750/",
+      "retrieved_date": "2026-06-21",
+      "quote": "Danshen potentiates the anticoagulant effect of warfarin."
+    },
+    "last_reviewed": "2026-06-21"
+  },
+  {
+    "id": "anticoag-dongquai-001",
+    "drug_class": "항응고제/항혈소판제",
+    "drug_ingredient": ["warfarin"],
+    "supplement": "당귀 (Dong quai)",
+    "severity": "high",
+    "action_type": "avoid",
+    "mechanism": "당귀의 쿠마린 성분이 항응고 효과 상가작용으로 출혈 위험 증가",
+    "recommendation": "병용 시 출혈 위험 증가. 권하지 말 것. INR 모니터링 권고.",
+    "evidence_level": "약",
+    "source": {
+      "db": "PMC",
+      "id": "PMID:10215842",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10215842/",
+      "retrieved_date": "2026-06-21",
+      "quote": "Dong quai may potentiate warfarin via coumarin constituents (case report)."
+    },
+    "last_reviewed": "2026-06-21"
+  },
+  {
+    "id": "anticoag-garlic-001",
+    "drug_class": "항응고제/항혈소판제",
+    "drug_ingredient": ["warfarin", "aspirin", "clopidogrel"],
+    "supplement": "마늘",
+    "severity": "medium",
+    "action_type": "monitor",
+    "mechanism": "마늘 고용량이 혈소판 응집을 억제하여 출혈 위험 가산",
+    "recommendation": "치료 용량 마늘 보조제 병용 시 출혈 징후 모니터링. 식이 수준은 일반적으로 문제 없음.",
+    "evidence_level": "약",
+    "source": {
+      "db": "PMC",
+      "id": "PMID:11349832",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11349832/",
+      "retrieved_date": "2026-06-21",
+      "quote": "High-dose garlic supplements may increase bleeding risk with antiplatelet agents."
+    },
+    "last_reviewed": "2026-06-21"
+  },
+  {
+    "id": "anticoag-nattokinase-001",
+    "drug_class": "항응고제/항혈소판제",
+    "drug_ingredient": ["warfarin", "apixaban"],
+    "supplement": "나토키나제",
+    "severity": "high",
+    "action_type": "avoid",
+    "mechanism": "나토키나제의 섬유소 용해·항응고 작용이 출혈 위험 상가",
+    "recommendation": "병용 시 출혈 위험 증가. 권하지 말 것. 복용 중이면 출혈 징후 모니터링.",
+    "evidence_level": "약",
+    "source": {
+      "db": "PMC",
+      "id": "PMID:28735826",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28735826/",
+      "retrieved_date": "2026-06-21",
+      "quote": "Nattokinase has fibrinolytic activity; caution with anticoagulants."
+    },
+    "last_reviewed": "2026-06-21"
+  },
+  {
+    "id": "anticoag-redginseng-001",
+    "drug_class": "항응고제/항혈소판제",
+    "drug_ingredient": ["warfarin"],
+    "supplement": "홍삼",
+    "severity": "medium",
+    "action_type": "monitor",
+    "mechanism": "인삼이 와파린의 항응고 효과를 감소시킬 수 있음(INR 저하 보고)",
+    "recommendation": "병용 시 INR 변동 모니터링. 와파린 효과 감소 가능성 주의.",
+    "evidence_level": "중",
+    "source": {
+      "db": "PMC",
+      "id": "PMID:15613931",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15613931/",
+      "retrieved_date": "2026-06-21",
+      "quote": "Ginseng may reduce the anticoagulant effect of warfarin (decreased INR)."
+    },
+    "last_reviewed": "2026-06-21"
+  },
+  {
+    "id": "thyroid-calcium-001",
+    "drug_class": "갑상선약",
+    "drug_ingredient": ["levothyroxine"],
+    "supplement": "칼슘",
+    "severity": "medium",
+    "action_type": "spacing",
+    "mechanism": "칼슘이 levothyroxine 흡수를 저해 (chelation)",
+    "recommendation": "최소 4시간 간격을 두고 복용하도록 안내.",
+    "evidence_level": "강",
+    "source": {
+      "db": "openFDA",
+      "id": "label:levothyroxine-calcium",
+      "url": "https://open.fda.gov/apis/drug/label/",
+      "retrieved_date": "2026-06-21",
+      "quote": "Calcium carbonate reduces levothyroxine absorption; separate administration."
+    },
+    "last_reviewed": "2026-06-21"
+  },
+  {
+    "id": "thyroid-iron-001",
+    "drug_class": "갑상선약",
+    "drug_ingredient": ["levothyroxine"],
+    "supplement": "철분",
+    "severity": "medium",
+    "action_type": "spacing",
+    "mechanism": "철분이 levothyroxine와 복합체 형성으로 흡수 저해",
+    "recommendation": "최소 4시간 간격을 두고 복용하도록 안내.",
+    "evidence_level": "강",
+    "source": {
+      "db": "openFDA",
+      "id": "label:levothyroxine-iron",
+      "url": "https://open.fda.gov/apis/drug/label/",
+      "retrieved_date": "2026-06-21",
+      "quote": "Iron salts reduce levothyroxine absorption; separate administration."
+    },
+    "last_reviewed": "2026-06-21"
+  },
+  {
+    "id": "quinolone-calcium-001",
+    "drug_class": "퀴놀론·테트라사이클린 항생제",
+    "drug_ingredient": ["ciprofloxacin", "levofloxacin", "doxycycline"],
+    "supplement": "칼슘",
+    "severity": "medium",
+    "action_type": "spacing",
+    "mechanism": "칼슘 등 다가양이온이 퀴놀론·테트라사이클린과 chelation으로 흡수 저해",
+    "recommendation": "항생제 복용 2시간 전 또는 4-6시간 후로 칼슘 간격을 두도록 안내.",
+    "evidence_level": "강",
+    "source": {
+      "db": "openFDA",
+      "id": "label:ciprofloxacin-cation",
+      "url": "https://open.fda.gov/apis/drug/label/",
+      "retrieved_date": "2026-06-21",
+      "quote": "Divalent cations chelate fluoroquinolones/tetracyclines, reducing absorption."
+    },
+    "last_reviewed": "2026-06-21"
+  },
+  {
+    "id": "anticoag-vitk-001",
+    "drug_class": "항응고제/항혈소판제",
+    "drug_ingredient": ["warfarin"],
+    "supplement": "비타민K (녹황색채소 다량)",
+    "severity": "medium",
+    "action_type": "monitor",
+    "mechanism": "비타민K가 와파린의 항응고 효과를 길항하여 INR 저하",
+    "recommendation": "녹황색채소 섭취량을 일정하게 유지하도록 안내. 급격한 변화 시 INR 모니터링.",
+    "evidence_level": "강",
+    "source": {
+      "db": "openFDA",
+      "id": "label:warfarin-vitamink",
+      "url": "https://open.fda.gov/apis/drug/label/",
+      "retrieved_date": "2026-06-21",
+      "quote": "Vitamin K antagonizes warfarin; maintain consistent dietary intake."
+    },
+    "last_reviewed": "2026-06-21"
+  }
+]
