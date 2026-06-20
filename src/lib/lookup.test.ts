@@ -74,4 +74,9 @@ describe('lookup', () => {
     const r = lookup([], '항응고제/항혈소판제', '은행 (Ginkgo biloba)')
     expect(r.kind).toBe('abstain')
   })
+
+  it('부분 일치 키(통제 어휘와 불일치)는 히트하지 않고 기권한다', () => {
+    const r = lookup(KB, '항응고제', '은행 (Ginkgo biloba)')
+    expect(r.kind).toBe('abstain')
+  })
 })

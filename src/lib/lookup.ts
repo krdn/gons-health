@@ -2,7 +2,7 @@ import type { InteractionEntry, LookupResult } from '../types'
 
 // cite-or-abstain 상수 — 미스 시 정확히 이 문구. 절대 생성하지 않음, 절대 "안전함" 아님.
 export const ABSTAIN_MESSAGE =
-  '검색한 자료 내 문서화된 상호작용 없음 — 안전하다는 의미가 아닙니다. 약사 판단 필요.'
+  '검색한 자료 내 문서화된 상호작용 없음 — 안전하다는 의미가 아닙니다. 약사 판단 필요.' as const
 
 /**
  * 결정론적 closed-set lookup. drug_class × supplement 정확 일치.
