@@ -19,8 +19,12 @@ export function validateKb(entries: unknown): InteractionEntry[] {
 
     if (!isNonEmptyString(entry.id)) throw new Error(`${ctx}: id 누락`)
     if (!isNonEmptyString(entry.drug_class)) throw new Error(`${ctx}: drug_class 누락`)
-    if (!Array.isArray(entry.drug_ingredient) || entry.drug_ingredient.length === 0)
-      throw new Error(`${ctx}: drug_ingredient 누락`)
+    if (
+      !Array.isArray(entry.drug_ingredient) ||
+      entry.drug_ingredient.length === 0 ||
+      !entry.drug_ingredient.every(isNonEmptyString)
+    )
+      throw new Error(`${ctx}: drug_ingredient 누락 또는 비문자열 요소`)
     if (!isNonEmptyString(entry.supplement)) throw new Error(`${ctx}: supplement 누락`)
     if (!SEVERITIES.includes(entry.severity as Severity)) throw new Error(`${ctx}: severity 부적합`)
     if (!ACTIONS.includes(entry.action_type as ActionType)) throw new Error(`${ctx}: action_type 부적합`)

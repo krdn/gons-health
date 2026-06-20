@@ -53,4 +53,17 @@ describe('validateKb', () => {
     ]
     expect(() => validateKb(bad)).toThrow(/source/)
   })
+
+  it('drug_ingredient에 비문자열 요소가 있으면 거부한다', () => {
+    const bad = [
+      {
+        id: 'x-003', drug_class: '항응고제/항혈소판제', drug_ingredient: ['warfarin', null],
+        supplement: '은행 (Ginkgo biloba)', severity: 'high', action_type: 'avoid',
+        mechanism: 'm', recommendation: 'r', evidence_level: '중',
+        source: { db: 'PMC', id: 'PMID:1', url: 'http://x', retrieved_date: '2026-06-21', quote: 'q' },
+        last_reviewed: '2026-06-21',
+      },
+    ]
+    expect(() => validateKb(bad)).toThrow(/drug_ingredient/)
+  })
 })
