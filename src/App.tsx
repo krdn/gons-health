@@ -1,3 +1,5 @@
+import { InteractionChecker } from './components/InteractionChecker'
+
 export default function App() {
-  return <h1>건기식 상호작용 체커</h1>
+  return <InteractionChecker />
 }
