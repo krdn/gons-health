@@ -35,8 +35,15 @@ export function validateKb(entries: unknown): InteractionEntry[] {
       throw new Error(`${ctx}: evidence_level 누락 또는 부적합 (강/중/약 필수)`)
     // cite-or-abstain: 인용 출처 강제
     const src = entry.source as Record<string, unknown> | undefined
-    if (!src || !isNonEmptyString(src.url) || !isNonEmptyString(src.id))
-      throw new Error(`${ctx}: source.url/id 누락 (인용 필수)`)
+    if (
+      !src ||
+      !isNonEmptyString(src.url) ||
+      !isNonEmptyString(src.id) ||
+      !isNonEmptyString(src.db) ||
+      !isNonEmptyString(src.quote) ||
+      !isNonEmptyString(src.retrieved_date)
+    )
+      throw new Error(`${ctx}: source 필드 누락 (url/id/db/quote/retrieved_date 필수)`)
     if (!isNonEmptyString(entry.last_reviewed)) throw new Error(`${ctx}: last_reviewed 누락`)
 
     return entry as unknown as InteractionEntry

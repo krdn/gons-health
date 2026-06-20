@@ -54,6 +54,18 @@ describe('validateKb', () => {
     expect(() => validateKb(bad)).toThrow(/source/)
   })
 
+  it('source.quote 없는 엔트리를 거부한다 (cite-or-abstain은 인용을 강제)', () => {
+    const bad = [
+      {
+        id: 'x-004', drug_class: 'a', drug_ingredient: ['x'], supplement: 's',
+        severity: 'low', action_type: 'monitor', mechanism: 'm', recommendation: 'r',
+        evidence_level: '약', source: { db: 'PMC', id: 'PMID:1', url: 'http://x', retrieved_date: '2026-06-21', quote: '' },
+        last_reviewed: '2026-06-21',
+      },
+    ]
+    expect(() => validateKb(bad)).toThrow(/source/)
+  })
+
   it('drug_ingredient에 비문자열 요소가 있으면 거부한다', () => {
     const bad = [
       {
