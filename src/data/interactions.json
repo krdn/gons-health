@@ -10,13 +10,14 @@
     "recommendation": "병용 시 출혈 위험 증가. 환자에게 권하지 말 것. 이미 복용 중이면 멍·출혈 징후 모니터링 및 처방의 상담.",
     "evidence_level": "중",
     "source": {
-      "db": "PMC",
-      "id": "PMID:18205318",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/18205318/",
+      "db": "미확정",
+      "id": "PENDING",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/",
       "retrieved_date": "2026-06-21",
-      "quote": "Ginkgo may increase bleeding risk when combined with anticoagulant/antiplatelet agents."
+      "quote": "약사 검증 대기 — 1차문헌 출처 미확정 (시드 PMID 환각으로 제거됨)."
     },
-    "last_reviewed": "2026-06-21"
+    "last_reviewed": "2026-06-21",
+    "verified": false
   },
   {
     "id": "anticoag-danshen-001",
@@ -25,17 +26,18 @@
     "supplement": "단삼 (Danshen)",
     "severity": "high",
     "action_type": "avoid",
-    "mechanism": "단삼이 와파린 대사·항응고 효과를 증강하여 출혈 위험 및 INR 상승",
+    "mechanism": "단삼이 와파린의 흡수·대사에 영향을 주어 항응고 효과를 증강, 출혈 위험 및 INR 상승",
     "recommendation": "병용 시 출혈 위험 증가. 권하지 말 것. 복용 중이면 INR 모니터링 및 처방의 상담.",
     "evidence_level": "중",
     "source": {
-      "db": "PMC",
-      "id": "PMID:11304750",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/11304750/",
+      "db": "PubMed",
+      "id": "PMID:11302416",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11302416/",
       "retrieved_date": "2026-06-21",
-      "quote": "Danshen potentiates the anticoagulant effect of warfarin."
+      "quote": "Interaction between warfarin and danshen (Salvia miltiorrhiza); the anticoagulant response to warfarin was exaggerated. (Chan TY, Ann Pharmacother 2001)"
     },
-    "last_reviewed": "2026-06-21"
+    "last_reviewed": "2026-06-21",
+    "verified": true
   },
   {
     "id": "anticoag-dongquai-001",
@@ -48,13 +50,14 @@
     "recommendation": "병용 시 출혈 위험 증가. 권하지 말 것. INR 모니터링 권고.",
     "evidence_level": "약",
     "source": {
-      "db": "PMC",
-      "id": "PMID:10215842",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/10215842/",
+      "db": "미확정",
+      "id": "PENDING",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/",
       "retrieved_date": "2026-06-21",
-      "quote": "Dong quai may potentiate warfarin via coumarin constituents (case report)."
+      "quote": "약사 검증 대기 — 1차문헌 출처 미확정 (시드 PMID 환각으로 제거됨)."
     },
-    "last_reviewed": "2026-06-21"
+    "last_reviewed": "2026-06-21",
+    "verified": false
   },
   {
     "id": "anticoag-garlic-001",
@@ -67,13 +70,14 @@
     "recommendation": "치료 용량 마늘 보조제 병용 시 출혈 징후 모니터링. 식이 수준은 일반적으로 문제 없음.",
     "evidence_level": "약",
     "source": {
-      "db": "PMC",
-      "id": "PMID:11349832",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/11349832/",
+      "db": "미확정",
+      "id": "PENDING",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/",
       "retrieved_date": "2026-06-21",
-      "quote": "High-dose garlic supplements may increase bleeding risk with antiplatelet agents."
+      "quote": "약사 검증 대기 — 1차문헌 출처 미확정 (시드 PMID 환각으로 제거됨)."
     },
-    "last_reviewed": "2026-06-21"
+    "last_reviewed": "2026-06-21",
+    "verified": false
   },
   {
     "id": "anticoag-nattokinase-001",
@@ -86,13 +90,14 @@
     "recommendation": "병용 시 출혈 위험 증가. 권하지 말 것. 복용 중이면 출혈 징후 모니터링.",
     "evidence_level": "약",
     "source": {
-      "db": "PMC",
-      "id": "PMID:28735826",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/28735826/",
+      "db": "미확정",
+      "id": "PENDING",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/",
       "retrieved_date": "2026-06-21",
-      "quote": "Nattokinase has fibrinolytic activity; caution with anticoagulants."
+      "quote": "약사 검증 대기 — 1차문헌 출처 미확정 (시드 PMID 환각으로 제거됨)."
     },
-    "last_reviewed": "2026-06-21"
+    "last_reviewed": "2026-06-21",
+    "verified": false
   },
   {
     "id": "anticoag-redginseng-001",
@@ -105,13 +110,14 @@
     "recommendation": "병용 시 INR 변동 모니터링. 와파린 효과 감소 가능성 주의.",
     "evidence_level": "중",
     "source": {
-      "db": "PMC",
-      "id": "PMID:15613931",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/15613931/",
+      "db": "미확정",
+      "id": "PENDING",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/",
       "retrieved_date": "2026-06-21",
-      "quote": "Ginseng may reduce the anticoagulant effect of warfarin (decreased INR)."
+      "quote": "약사 검증 대기 — 1차문헌 출처 미확정 (시드 PMID 환각으로 제거됨)."
     },
-    "last_reviewed": "2026-06-21"
+    "last_reviewed": "2026-06-21",
+    "verified": false
   },
   {
     "id": "thyroid-calcium-001",
@@ -120,17 +126,18 @@
     "supplement": "칼슘",
     "severity": "medium",
     "action_type": "spacing",
-    "mechanism": "칼슘이 levothyroxine 흡수를 저해 (chelation)",
+    "mechanism": "칼슘(탄산칼슘)이 levothyroxine 흡수를 저해하여 갑상선기능 저하 및 TSH 상승 유발",
     "recommendation": "최소 4시간 간격을 두고 복용하도록 안내.",
     "evidence_level": "강",
     "source": {
-      "db": "openFDA",
-      "id": "label:levothyroxine-calcium",
-      "url": "https://open.fda.gov/apis/drug/label/",
+      "db": "PubMed",
+      "id": "PMID:10838651",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10838651/",
       "retrieved_date": "2026-06-21",
-      "quote": "Calcium carbonate reduces levothyroxine absorption; separate administration."
+      "quote": "Calcium carbonate reduces T4 absorption and increases serum thyrotropin levels. (Effect of calcium carbonate on the absorption of levothyroxine, JAMA 2000)"
     },
-    "last_reviewed": "2026-06-21"
+    "last_reviewed": "2026-06-21",
+    "verified": true
   },
   {
     "id": "thyroid-iron-001",
@@ -143,13 +150,14 @@
     "recommendation": "최소 4시간 간격을 두고 복용하도록 안내.",
     "evidence_level": "강",
     "source": {
-      "db": "openFDA",
-      "id": "label:levothyroxine-iron",
-      "url": "https://open.fda.gov/apis/drug/label/",
+      "db": "미확정",
+      "id": "PENDING",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/",
       "retrieved_date": "2026-06-21",
-      "quote": "Iron salts reduce levothyroxine absorption; separate administration."
+      "quote": "약사 검증 대기 — 1차문헌 출처 미확정 (시드 PMID 환각으로 제거됨)."
     },
-    "last_reviewed": "2026-06-21"
+    "last_reviewed": "2026-06-21",
+    "verified": false
   },
   {
     "id": "quinolone-calcium-001",
@@ -162,13 +170,14 @@
     "recommendation": "항생제 복용 2시간 전 또는 4-6시간 후로 칼슘 간격을 두도록 안내.",
     "evidence_level": "강",
     "source": {
-      "db": "openFDA",
-      "id": "label:ciprofloxacin-cation",
-      "url": "https://open.fda.gov/apis/drug/label/",
+      "db": "미확정",
+      "id": "PENDING",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/",
       "retrieved_date": "2026-06-21",
-      "quote": "Divalent cations chelate fluoroquinolones/tetracyclines, reducing absorption."
+      "quote": "약사 검증 대기 — 1차문헌 출처 미확정 (시드 PMID 환각으로 제거됨)."
     },
-    "last_reviewed": "2026-06-21"
+    "last_reviewed": "2026-06-21",
+    "verified": false
   },
   {
     "id": "anticoag-vitk-001",
@@ -181,12 +190,13 @@
     "recommendation": "녹황색채소 섭취량을 일정하게 유지하도록 안내. 급격한 변화 시 INR 모니터링.",
     "evidence_level": "강",
     "source": {
-      "db": "openFDA",
-      "id": "label:warfarin-vitamink",
-      "url": "https://open.fda.gov/apis/drug/label/",
+      "db": "미확정",
+      "id": "PENDING",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/",
       "retrieved_date": "2026-06-21",
-      "quote": "Vitamin K antagonizes warfarin; maintain consistent dietary intake."
+      "quote": "약사 검증 대기 — 1차문헌 출처 미확정 (시드 PMID 환각으로 제거됨)."
     },
-    "last_reviewed": "2026-06-21"
+    "last_reviewed": "2026-06-21",
+    "verified": false
   }
 ]

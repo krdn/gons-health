@@ -22,6 +22,9 @@ export interface InteractionEntry {
   evidence_level: EvidenceLevel
   source: Source
   last_reviewed: string // YYYY-MM-DD
+  // 인용 출처를 PubMed 등 1차문헌과 실제 대조해 제목·내용이 주장과 일치함을 확인한 경우에만 true.
+  // verified=false 엔트리는 lookup에서 절대 반환되지 않음 → 약사가 보는 모든 경고는 검증+인용된 것.
+  verified: boolean
 }
 
 // 미스 시 출력 (cite-or-abstain 상수)

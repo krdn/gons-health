@@ -45,6 +45,9 @@ export function validateKb(entries: unknown): InteractionEntry[] {
     )
       throw new Error(`${ctx}: source 필드 누락 (url/id/db/quote/retrieved_date 필수)`)
     if (!isNonEmptyString(entry.last_reviewed)) throw new Error(`${ctx}: last_reviewed 누락`)
+    // verified는 boolean 필수 — 누락 시 명시적 에러로 드러냄
+    if (typeof entry.verified !== 'boolean')
+      throw new Error(`${ctx}: verified 누락 또는 boolean 아님`)
 
     return entry as unknown as InteractionEntry
   })

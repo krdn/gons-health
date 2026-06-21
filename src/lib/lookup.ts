@@ -15,7 +15,10 @@ export function lookup(
   supplement: string,
 ): LookupResult {
   const entries = kb.filter(
-    (e) => e.drug_class === drugClass && e.supplement === supplement,
+    (e) =>
+      e.verified &&
+      e.drug_class === drugClass &&
+      e.supplement === supplement,
   )
   if (entries.length === 0) {
     return { kind: 'abstain', message: ABSTAIN_MESSAGE }

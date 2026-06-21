@@ -21,8 +21,8 @@ function EntryCard({ entry }: { entry: InteractionEntry }) {
         <span style={{ background: '#eef', padding: '2px 8px', borderRadius: 4 }}>
           {ACTION_LABEL[entry.action_type]}
         </span>
-        <span style={{ background: '#efe', padding: '2px 8px', borderRadius: 4 }}>
-          ✅ 검증됨 · 근거강도 {entry.evidence_level}
+        <span style={{ background: '#efe', padding: '2px 8px', borderRadius: 4 }} title="인용 출처를 1차문헌과 대조 완료. 최종 임상 판단은 약사가 합니다.">
+          ✅ 인용 검증됨 · 근거강도 {entry.evidence_level}
         </span>
       </div>
       <p style={{ margin: '8px 0' }}>
