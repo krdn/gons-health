@@ -36,18 +36,53 @@
 
 데이터 흐름: `interactions.json` → `validateKb()` → `lookup()` → `ResultCard`
 
-## 실행
+## 실행 (standalone 앱)
 
 ```bash
 npm install
 npm run dev          # 개발 서버 (기본 http://localhost:5173)
-npm run build        # 타입체크 + 프로덕션 빌드
+npm run build:app    # standalone 웹앱 빌드 → dist-app/
 npm test             # 테스트 1회 실행 (vitest)
 ```
 
+## 라이브러리로 사용 (다른 프로젝트에 임베드)
+
+이 프로젝트는 **standalone 웹앱**이면서 동시에 **`@krdn/gons-health` 코어 패키지**로 다른
+프로젝트(예: gons-dashboard)에 임베드할 수 있다. 노출되는 것은 **React 의존이 0인 순수 코어**
+(lookup 엔진·KB·어휘·타입)뿐이며, React UI 컴포넌트는 포함하지 않는다 — 소비 프로젝트의 React
+버전과 충돌하지 않게 하기 위함이다.
+
+```bash
+# 소비 프로젝트에서 (사내 @krdn/* 패키지와 동일한 GitHub 태그 의존성 방식)
+pnpm add github:krdn/gons-health#v0.1.0
+```
+
+```ts
+import { loadKb, lookup, DRUG_CLASSES, SUPPLEMENTS } from '@krdn/gons-health'
+import type { LookupResult } from '@krdn/gons-health'
+
+const kb = loadKb() // validateKb 를 거친 검증된 KB (fail-loud)
+const result = lookup(kb, '갑상선약', '칼슘')
+// result.kind === 'hit' → 인용된 상호작용 엔트리
+// result.kind === 'abstain' → 고정 기권 메시지 (안전 ≠ 무경고)
+```
+
+**안전 계약 보존:** 패키지는 raw `interactions.json` 을 노출하지 않고 `loadKb()` 만 노출한다.
+`lookup()` 의 verified 게이트·cite-or-abstain 상수·closed-set 어휘가 임베드 환경에서도 그대로
+동작한다. 자세한 내용은 [`docs/PACKAGING.md`](docs/PACKAGING.md) 참조.
+
+### 패키지 빌드 (배포자용)
+
+```bash
+npm run build        # tsup → dist/ (커밋 대상, GitHub 의존성이 그대로 받음)
+```
+
+`dist/` 산출물은 `@krdn/saju` 등 사내 패턴과 동일하게 **git 에 커밋**한다. GitHub 태그 의존성은
+git-archive 타르볼로 받아지므로, 빌드 산출물이 커밋되어 있어야 소비 프로젝트에서 동작한다.
+
 ## 기술 스택
 
-React 18 · TypeScript · Vite · Vitest. 백엔드·외부 API 없음(정적 KB 기반).
+React 18 · TypeScript · Vite · Vitest · tsup(패키지 빌드). 백엔드·외부 API 없음(정적 KB 기반).
 
 ## 기여 / KB 엔트리 추가
 

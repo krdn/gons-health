@@ -2,7 +2,7 @@
 node_modules/
 .claude/
 .superpowers/
-dist/
+dist-app/
 *.tsbuildinfo
 vite.config.d.ts
 vite.config.js
