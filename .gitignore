@@ -1,3 +1,8 @@
 .memsearch/
 node_modules/
 .claude/
+.superpowers/
+dist/
+*.tsbuildinfo
+vite.config.d.ts
+vite.config.js
