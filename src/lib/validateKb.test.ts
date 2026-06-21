@@ -35,6 +35,7 @@ describe('validateKb', () => {
         evidence_level: '중',
         source: { db: 'PMC', id: 'PMID:18205318', url: 'https://pubmed.ncbi.nlm.nih.gov/18205318/', retrieved_date: '2026-06-21', quote: 'Ginkgo may increase bleeding risk.' },
         last_reviewed: '2026-06-21',
+        verified: true,
       },
     ]
     const result = validateKb(good)
@@ -77,5 +78,31 @@ describe('validateKb', () => {
       },
     ]
     expect(() => validateKb(bad)).toThrow(/drug_ingredient/)
+  })
+
+  it('verified 누락 엔트리를 거부한다', () => {
+    const bad = [
+      {
+        id: 'x-005', drug_class: 'a', drug_ingredient: ['x'], supplement: 's',
+        severity: 'low', action_type: 'monitor', mechanism: 'm', recommendation: 'r',
+        evidence_level: '약', source: { db: 'PMC', id: 'PMID:1', url: 'http://x', retrieved_date: '2026-06-21', quote: 'q' },
+        last_reviewed: '2026-06-21',
+        // verified 누락
+      },
+    ]
+    expect(() => validateKb(bad)).toThrow(/verified/)
+  })
+
+  it('verified가 boolean이 아니면 거부한다', () => {
+    const bad = [
+      {
+        id: 'x-006', drug_class: 'a', drug_ingredient: ['x'], supplement: 's',
+        severity: 'low', action_type: 'monitor', mechanism: 'm', recommendation: 'r',
+        evidence_level: '약', source: { db: 'PMC', id: 'PMID:1', url: 'http://x', retrieved_date: '2026-06-21', quote: 'q' },
+        last_reviewed: '2026-06-21',
+        verified: 'true', // 문자열 — boolean 아님
+      },
+    ]
+    expect(() => validateKb(bad)).toThrow(/verified/)
   })
 })

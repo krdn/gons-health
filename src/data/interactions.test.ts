@@ -9,10 +9,22 @@ describe('앵커 KB', () => {
     expect(() => validateKb(kb)).not.toThrow()
   })
 
-  it('앵커 클러스터(항응고제×은행)가 존재하고 히트한다', () => {
+  it('앵커 클러스터(항응고제×단삼)가 존재하고 히트한다 (verified:true 엔트리)', () => {
+    const valid = validateKb(kb)
+    const r = lookup(valid, '항응고제/항혈소판제', '단삼 (Danshen)')
+    expect(r.kind).toBe('hit')
+  })
+
+  it('verified:false 엔트리(항응고제×은행)는 lookup에서 기권을 반환한다', () => {
     const valid = validateKb(kb)
     const r = lookup(valid, '항응고제/항혈소판제', '은행 (Ginkgo biloba)')
-    expect(r.kind).toBe('hit')
+    expect(r.kind).toBe('abstain')
+  })
+
+  it('KB에 verified:true 엔트리와 verified:false 엔트리가 혼재한다 (혼합 상태 고정)', () => {
+    const valid = validateKb(kb)
+    expect(valid.some((e) => e.verified === true)).toBe(true)
+    expect(valid.some((e) => e.verified === false)).toBe(true)
   })
 
   it('KB의 모든 drug_class가 통제 어휘에 존재한다', () => {

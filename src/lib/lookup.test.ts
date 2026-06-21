@@ -15,6 +15,7 @@ const KB: InteractionEntry[] = [
     evidence_level: '중',
     source: { db: 'PMC', id: 'PMID:18205318', url: 'https://pubmed.ncbi.nlm.nih.gov/18205318/', retrieved_date: '2026-06-21', quote: 'Ginkgo may increase bleeding risk.' },
     last_reviewed: '2026-06-21',
+    verified: true,
   },
   {
     id: 'thyroid-calcium-001',
@@ -28,6 +29,7 @@ const KB: InteractionEntry[] = [
     evidence_level: '강',
     source: { db: 'openFDA', id: 'label:levothyroxine', url: 'https://open.fda.gov/', retrieved_date: '2026-06-21', quote: 'Calcium reduces levothyroxine absorption.' },
     last_reviewed: '2026-06-21',
+    verified: true,
   },
 ]
 
@@ -78,5 +80,20 @@ describe('lookup', () => {
   it('부분 일치 키(통제 어휘와 불일치)는 히트하지 않고 기권한다', () => {
     const r = lookup(KB, '항응고제', '은행 (Ginkgo biloba)')
     expect(r.kind).toBe('abstain')
+  })
+
+  it('verified:false 엔트리는 drug_class×supplement가 정확히 일치해도 절대 반환되지 않는다 (안전 계약)', () => {
+    const kbWithUnverified: InteractionEntry[] = [
+      {
+        ...KB[0],
+        id: 'anticoag-ginkgo-unverified',
+        verified: false,
+      },
+    ]
+    const r = lookup(kbWithUnverified, '항응고제/항혈소판제', '은행 (Ginkgo biloba)')
+    expect(r.kind).toBe('abstain')
+    if (r.kind === 'abstain') {
+      expect(r.message).toBe(ABSTAIN_MESSAGE)
+    }
   })
 })
