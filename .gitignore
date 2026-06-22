@@ -6,3 +6,7 @@ dist-app/
 *.tsbuildinfo
 vite.config.d.ts
 vite.config.js
+
+# KB 검증 파이프라인 중간 산출물
+scripts/verify-queue.json
+scripts/verdicts.json
