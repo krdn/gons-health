@@ -150,14 +150,14 @@
     "recommendation": "최소 4시간 간격을 두고 복용하도록 안내.",
     "evidence_level": "강",
     "source": {
-      "db": "미확정",
-      "id": "PENDING",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/",
-      "retrieved_date": "2026-06-21",
-      "quote": "약사 검증 대기 — 1차문헌 출처 미확정 (시드 PMID 환각으로 제거됨)."
+      "db": "PubMed",
+      "id": "PMID:1443969",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/1443969/",
+      "retrieved_date": "2026-06-22",
+      "quote": "Simultaneous ingestion of ferrous sulfate and thyroxine causes a variable reduction in thyroxine efficacy that is clinically significant in some patients. (Campbell NR et al., Ann Intern Med 1992)"
     },
-    "last_reviewed": "2026-06-21",
-    "verified": false
+    "last_reviewed": "2026-06-22",
+    "verified": true
   },
   {
     "id": "quinolone-calcium-001",
@@ -170,14 +170,14 @@
     "recommendation": "항생제 복용 2시간 전 또는 4-6시간 후로 칼슘 간격을 두도록 안내.",
     "evidence_level": "강",
     "source": {
-      "db": "미확정",
-      "id": "PENDING",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/",
-      "retrieved_date": "2026-06-21",
-      "quote": "약사 검증 대기 — 1차문헌 출처 미확정 (시드 PMID 환각으로 제거됨)."
+      "db": "PubMed",
+      "id": "PMID:34866992",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34866992/",
+      "retrieved_date": "2026-06-22",
+      "quote": "Only when given orally, drug-drug interactions (DDIs) due to chelation can occur between fluoroquinolones or tetracyclines and divalent or trivalent cation-containing compounds (DTCCs) such as iron, calcium, zinc, magnesium, and aluminum. (Eljaaly K et al., Saudi J Biol Sci 2021)"
     },
-    "last_reviewed": "2026-06-21",
-    "verified": false
+    "last_reviewed": "2026-06-22",
+    "verified": true
   },
   {
     "id": "anticoag-vitk-001",
@@ -190,13 +190,13 @@
     "recommendation": "녹황색채소 섭취량을 일정하게 유지하도록 안내. 급격한 변화 시 INR 모니터링.",
     "evidence_level": "강",
     "source": {
-      "db": "미확정",
-      "id": "PENDING",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/",
-      "retrieved_date": "2026-06-21",
-      "quote": "약사 검증 대기 — 1차문헌 출처 미확정 (시드 PMID 환각으로 제거됨)."
+      "db": "PubMed",
+      "id": "PMID:14717783",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/14717783/",
+      "retrieved_date": "2026-06-22",
+      "quote": "For each increase of 100 microg in the daily dietary intake of vitamin K averaged over 4 d, the INR was reduced by 0.2. (Khan T et al., Br J Haematol 2004)"
     },
-    "last_reviewed": "2026-06-21",
-    "verified": false
+    "last_reviewed": "2026-06-22",
+    "verified": true
   }
 ]

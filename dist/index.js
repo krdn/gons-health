@@ -151,14 +151,14 @@ var interactions_default = [
     recommendation: "\uCD5C\uC18C 4\uC2DC\uAC04 \uAC04\uACA9\uC744 \uB450\uACE0 \uBCF5\uC6A9\uD558\uB3C4\uB85D \uC548\uB0B4.",
     evidence_level: "\uAC15",
     source: {
-      db: "\uBBF8\uD655\uC815",
-      id: "PENDING",
-      url: "https://pubmed.ncbi.nlm.nih.gov/",
-      retrieved_date: "2026-06-21",
-      quote: "\uC57D\uC0AC \uAC80\uC99D \uB300\uAE30 \u2014 1\uCC28\uBB38\uD5CC \uCD9C\uCC98 \uBBF8\uD655\uC815 (\uC2DC\uB4DC PMID \uD658\uAC01\uC73C\uB85C \uC81C\uAC70\uB428)."
+      db: "PubMed",
+      id: "PMID:1443969",
+      url: "https://pubmed.ncbi.nlm.nih.gov/1443969/",
+      retrieved_date: "2026-06-22",
+      quote: "Simultaneous ingestion of ferrous sulfate and thyroxine causes a variable reduction in thyroxine efficacy that is clinically significant in some patients. (Campbell NR et al., Ann Intern Med 1992)"
     },
-    last_reviewed: "2026-06-21",
-    verified: false
+    last_reviewed: "2026-06-22",
+    verified: true
   },
   {
     id: "quinolone-calcium-001",
@@ -171,14 +171,14 @@ var interactions_default = [
     recommendation: "\uD56D\uC0DD\uC81C \uBCF5\uC6A9 2\uC2DC\uAC04 \uC804 \uB610\uB294 4-6\uC2DC\uAC04 \uD6C4\uB85C \uCE7C\uC298 \uAC04\uACA9\uC744 \uB450\uB3C4\uB85D \uC548\uB0B4.",
     evidence_level: "\uAC15",
     source: {
-      db: "\uBBF8\uD655\uC815",
-      id: "PENDING",
-      url: "https://pubmed.ncbi.nlm.nih.gov/",
-      retrieved_date: "2026-06-21",
-      quote: "\uC57D\uC0AC \uAC80\uC99D \uB300\uAE30 \u2014 1\uCC28\uBB38\uD5CC \uCD9C\uCC98 \uBBF8\uD655\uC815 (\uC2DC\uB4DC PMID \uD658\uAC01\uC73C\uB85C \uC81C\uAC70\uB428)."
+      db: "PubMed",
+      id: "PMID:34866992",
+      url: "https://pubmed.ncbi.nlm.nih.gov/34866992/",
+      retrieved_date: "2026-06-22",
+      quote: "Only when given orally, drug-drug interactions (DDIs) due to chelation can occur between fluoroquinolones or tetracyclines and divalent or trivalent cation-containing compounds (DTCCs) such as iron, calcium, zinc, magnesium, and aluminum. (Eljaaly K et al., Saudi J Biol Sci 2021)"
     },
-    last_reviewed: "2026-06-21",
-    verified: false
+    last_reviewed: "2026-06-22",
+    verified: true
   },
   {
     id: "anticoag-vitk-001",
@@ -191,14 +191,14 @@ var interactions_default = [
     recommendation: "\uB179\uD669\uC0C9\uCC44\uC18C \uC12D\uCDE8\uB7C9\uC744 \uC77C\uC815\uD558\uAC8C \uC720\uC9C0\uD558\uB3C4\uB85D \uC548\uB0B4. \uAE09\uACA9\uD55C \uBCC0\uD654 \uC2DC INR \uBAA8\uB2C8\uD130\uB9C1.",
     evidence_level: "\uAC15",
     source: {
-      db: "\uBBF8\uD655\uC815",
-      id: "PENDING",
-      url: "https://pubmed.ncbi.nlm.nih.gov/",
-      retrieved_date: "2026-06-21",
-      quote: "\uC57D\uC0AC \uAC80\uC99D \uB300\uAE30 \u2014 1\uCC28\uBB38\uD5CC \uCD9C\uCC98 \uBBF8\uD655\uC815 (\uC2DC\uB4DC PMID \uD658\uAC01\uC73C\uB85C \uC81C\uAC70\uB428)."
+      db: "PubMed",
+      id: "PMID:14717783",
+      url: "https://pubmed.ncbi.nlm.nih.gov/14717783/",
+      retrieved_date: "2026-06-22",
+      quote: "For each increase of 100 microg in the daily dietary intake of vitamin K averaged over 4 d, the INR was reduced by 0.2. (Khan T et al., Br J Haematol 2004)"
     },
-    last_reviewed: "2026-06-21",
-    verified: false
+    last_reviewed: "2026-06-22",
+    verified: true
   }
 ];
 
