@@ -110,6 +110,7 @@ export function aggregate(raw: RawData): DashboardModel {
     gates: raw.state.gates,
     flow: raw.state.flow,
     artifacts: raw.state.artifacts,
+    artifactWarning: raw.state.artifactWarning ?? '',
     kb: {
       total: raw.kb.total,
       verified: raw.kb.verified,

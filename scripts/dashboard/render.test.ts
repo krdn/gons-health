@@ -29,6 +29,7 @@ const model: DashboardModel = {
     { name: '@krdn/gons-health', cmd: 'npm run build → dist/', out: '순수 코어', use: '코어 export' },
     { name: 'standalone 웹앱', cmd: 'npm run build:app', out: 'React UI', use: '단독 실행' },
   ],
+  artifactWarning: '⚠️ 함정: dist/ 는 반드시 git에 커밋. GitHub 의존성은 git-archive 타르볼이라 tracked 파일만 받음.',
   kb: {
     total: 2,
     verified: 1,
@@ -120,5 +121,21 @@ describe('render — HTML 무결성', () => {
 
   it('생성 시각·SHA 푸터', () => {
     expect(html).toContain('abc123')
+  })
+
+  it('warn-box: artifactWarning 텍스트 포함 (dist/ 또는 타르볼)', () => {
+    expect(html).toContain('dist/')
+    expect(html).toContain('타르볼')
+  })
+
+  it('gate.flow: 게이트 카드에 "gate flow" 클래스 포함', () => {
+    expect(html).toContain('class="gate flow"')
+  })
+
+  it('kb-note: 동적 해설이 토글 밖(항상 보이는 위치)에도 존재 — kb-note 클래스 포함', () => {
+    expect(html).toContain('class="kb-note"')
+    // 동적 해설 문자열이 HTML에 2번 이상 등장 (kb-note + help-body 토글 안)
+    const occurrences = html.split('동적 해설 병목').length - 1
+    expect(occurrences).toBeGreaterThanOrEqual(2)
   })
 })

@@ -106,6 +106,7 @@
       "use": "단독 실행 웹앱. ResultCard 등 UI 컴포넌트는 코어 패키지에서 제외(소비처 React 충돌 방지)."
     }
   ],
+  "artifactWarning": "⚠️ 함정: dist/ 는 반드시 git에 커밋. GitHub 의존성은 git-archive 타르볼이라 tracked 파일만 받음 → gitignore하면 소비처가 빈 패키지를 받아 깨짐. 코드 변경 시 dist/ 재빌드 + package.json 함께 커밋.",
   "help": {
     "stats": "상단 지표는 코드에서 자동 집계된 사실이다. 테스트·KB·산출물 수치는 매 생성 시 파일에서 다시 읽는다.",
     "safetyGates": "3중 게이트는 합성으로만 안전하다. verified 필터·ABSTAIN 상수·closed-set 어휘 중 하나라도 무너지면 미검증/환각 경고가 약사에게 샌다.",

@@ -58,6 +58,7 @@ export interface ProjectState {
   gates: Gate[]
   flow: FlowNode[]
   artifacts: Artifact[]
+  artifactWarning?: string // 듀얼 산출물 섹션 아래 항상 표시 경고 (옵셔널, 비면 렌더 안 함)
   help: Record<string, string> // 섹션ID → 고정 설명
 }
 
@@ -154,6 +155,7 @@ export interface DashboardModel {
   gates: Gate[] // 메타에서 그대로 통과
   flow: FlowNode[] // 메타에서 그대로 통과
   artifacts: Artifact[] // 메타에서 그대로 통과
+  artifactWarning: string // 듀얼 산출물 섹션 아래 경고 (비면 렌더 안 함)
   kb: {
     total: number
     verified: number

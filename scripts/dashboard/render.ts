@@ -94,7 +94,7 @@ function renderFlow(model: DashboardModel): string {
 function renderGates(model: DashboardModel): string {
   return model.gates
     .map(
-      (g) => `<div class="gate">
+      (g) => `<div class="gate flow">
         <div class="g-head"><span class="g-num">${escapeHtml(g.num)}</span>
           <span class="g-name">${escapeHtml(g.name)}</span></div>
         <div class="g-file">${escapeHtml(g.file)}</div>
@@ -180,7 +180,8 @@ const STYLE = `
   .gate .g-num { font-size: 11px; font-weight: 700; color: var(--bg); background: var(--accent);
     width: 20px; height: 20px; border-radius: 6px; display: grid; place-items: center; flex: none; }
   .gate .g-name { font-weight: 600; font-size: 15px; }
-  .gate .g-file { font-size: 11px; color: var(--muted); font-family: ui-monospace, Menlo, monospace; }
+  .gate .g-file { font-size: 11px; color: var(--muted); font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+  .gate.flow { border-color: oklch(72% 0.15 250 / 0.4); }
   .gate .g-body { font-size: 13px; color: var(--muted); margin-top: 8px; }
   .flow-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
     background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
@@ -207,7 +208,7 @@ const STYLE = `
     border-radius: 999px; }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
   .chip { display: inline-flex; align-items: center; gap: 7px; padding: 7px 11px;
-    border-radius: 9px; font-size: 12.5px; border: 1px solid var(--line); background: var(--panel-2); }
+    border-radius: 9px; font-size: 12.5px; border: 1px solid var(--line); background: var(--panel-2); cursor: default; }
   .chip .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
   .chip.v { border-color: oklch(72% 0.16 150 / 0.45); }
   .chip.v .dot { background: var(--ok); box-shadow: 0 0 8px var(--ok); }
@@ -250,6 +251,9 @@ const STYLE = `
     padding: 12px 14px; margin: 8px 0 12px; font-size: 13px; color: var(--muted); }
   .help-body p { margin: 0 0 6px; } .help-body p:last-child { margin: 0; }
   .help-dynamic { color: var(--pending); }
+  .warn-box { margin-top: 12px; background: oklch(68% 0.2 25 / 0.1); border: 1px solid oklch(68% 0.2 25 / 0.35); border-radius: 10px; padding: 11px 13px; font-size: 12.5px; }
+  .warn-box b { color: var(--danger); }
+  .kb-note { font-size: 12px; color: var(--muted); margin-top: 10px; }
   footer { margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--line);
     font-size: 12px; color: var(--muted); display: flex; justify-content: space-between;
     flex-wrap: wrap; gap: 8px; }
@@ -300,6 +304,7 @@ export function render(model: DashboardModel): string {
   <div class="kb-bar-wrap">
     <div class="kb-bar-head"><div>검증된 엔트리 비율</div><div class="pct">${model.kb.pct}%</div></div>
     <div class="kb-bar"><div class="fill" style="width:${model.kb.pct}%"></div></div>
+    ${model.help['kbStatus']?.dynamic ? `<div class="kb-note">${escapeHtml(model.help['kbStatus'].dynamic)}</div>` : ''}
     <div class="chips">${renderChips(model)}</div>
   </div>
 
@@ -308,6 +313,7 @@ export function render(model: DashboardModel): string {
 
   <h2>듀얼 산출물 구조 ${helpToggle('dualArtifact', model.help['dualArtifact'])}</h2>
   <div class="dual">${renderArtifacts(model)}</div>
+  ${model.artifactWarning ? `<div class="warn-box">${escapeHtml(model.artifactWarning)}</div>` : ''}
 
   <h2>최근 작업</h2>
   <div class="list-wrap">${renderCommits(model)}</div>
