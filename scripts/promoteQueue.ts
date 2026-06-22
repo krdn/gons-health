@@ -1,6 +1,7 @@
 // 약사 승격 큐. auto_verified(기계 검증 통과) 엔트리를 약사가 일괄 검토 후 verified(금본위)로 승격.
 // 승격은 명시적 사람 행동 — 이 스크립트는 자동으로 verified를 켜지 않는다(CLI 인자 필요).
 import { readFileSync, writeFileSync } from 'node:fs'
+import { pathToFileURL } from 'node:url'
 
 export interface PromotableEntry {
   id: string
@@ -34,10 +35,6 @@ export function listPromotable(kb: any[]): PromotableEntry[] {
 export function promote(kb: any[], ids: string[], reviewedDate: string): any[] {
   const promotable = new Set(listPromotable(kb).map((x) => x.id))
   const requested = new Set(ids)
-  const skipped = ids.filter((id) => !promotable.has(id))
-  if (skipped.length) {
-    console.warn(`[warn] 승격 후보 아님(건너뜀): ${skipped.join(', ')} — auto_verified=true & verified=false 만 승격 가능`)
-  }
   return kb.map((e) => {
     if (!requested.has(e.id) || !promotable.has(e.id)) return e
     const pmid = e.auto_review?.pmid ?? e.source.id
@@ -84,9 +81,17 @@ function main() {
 
   const promoteArg = arg === '--promote' ? process.argv[3] : arg
   const ids = promoteArg === 'all' ? listPromotable(kb).map((x) => x.id) : promoteArg.split(',')
+  const promotable = new Set(listPromotable(kb).map((x) => x.id))
+  const skipped = ids.filter((id) => !promotable.has(id))
+  if (skipped.length) {
+    console.warn(`[warn] 승격 후보 아님(건너뜀): ${skipped.join(', ')} — auto_verified=true & verified=false 만 승격 가능`)
+  }
   const next = promote(kb, ids, today())
   writeFileSync(kbPath, JSON.stringify(next, null, 2) + '\n')
   console.log(`승격 완료: ${ids.length}개 -> verified=true. 다음: npm test && npm run build 후 커밋.`)
 }
 
-main()
+// import 시 자동 실행을 막아 테스트에서 promote/listPromotable만 사용 가능하도록 한다.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main()
+}
