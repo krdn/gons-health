@@ -34,7 +34,7 @@
 │  • docs/**/plans/*.md ([ ] 체크박스)   - 마일스톤/단계      │
 │  • git log (최근 작업 이력)            - 다음 행동          │
 │  • package.json (산출물·명령어)        - 설계 근거/도움말   │
-│  • 테스트 결과 (vitest --json, 캐시)   - 범위 제약          │
+│  • 테스트 결과 (vitest run --reporter=json 인라인 실행) - 범위 제약  │
 │  • gh issue list (선택, 단방향)                            │
 └────────────────────────┬─────────────────────────────────┘
                          │
@@ -112,7 +112,7 @@ CLAUDE.md — "의미있는 작업 후 npm run dashboard 실행" 유도 문구
 | KB 진행률 (예: 2/10) | `interactions.json` | `verified===true` 카운트 |
 | 마일스톤 진행률 (%) | `planFile`의 `- [ ]`/`- [x]` | 체크박스 비율 |
 | 최근 작업 | `git log --oneline -10` | 파싱 |
-| 테스트 상태 | `vitest run --reporter=json` 캐시 | pass/fail 카운트 |
+| 테스트 상태 | `vitest run --reporter=json` 인라인 실행 | pass/fail 카운트 |
 | 산출물 | `package.json` scripts/exports + `dist/` 존재 | 정적 추출 |
 | GitHub 할 일 | `gh issue list --json`(선택) | 오프라인이면 스킵 |
 
@@ -124,7 +124,7 @@ CLAUDE.md — "의미있는 작업 후 npm run dashboard 실행" 유도 문구
    ├ interactions.json   → 필수, KB 통계
    ├ plan *.md           → 체크박스 카운트 (파일 없으면 빈 배열)
    ├ git log             → try/catch, 실패 시 { ok:false }
-   ├ vitest 캐시         → 마지막 테스트 결과 JSON 읽기 (없으면 "미실행")
+   ├ vitest run --reporter=json 인라인 실행 → 테스트 결과 JSON 수집 (실패 시 { ok:false })
    └ gh issue (선택)     → try/catch, gh 없거나 오프라인이면 { ok:false }
 
 2. aggregate.ts — 순수 함수 (네트워크 0, 결정론적)

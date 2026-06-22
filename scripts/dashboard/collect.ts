@@ -122,7 +122,11 @@ function tryGitSha(root: string): string {
 }
 
 function tryTest(root: string): SourceResult<TestResult> {
-  // vitest를 JSON 리포터로 인라인 실행. 실패해도 throw 안 함.
+  // tryTest는 vitest 컨텍스트(process.env.VITEST)면 스폰을 건너뛴다 →
+  // 테스트에서 collect() 호출해도 중첩 vitest 재귀 없음(런타임 enforced).
+  if (process.env.VITEST) {
+    return { ok: false, reason: 'vitest 실행 중 — 중첩 회피' }
+  }
   try {
     const reportPath = join(root, '.dashboard-test-report.json')
     execSync(`npx vitest run --reporter=json --outputFile=${reportPath}`, {
@@ -189,9 +193,8 @@ function gitReason(err: unknown): string {
 }
 
 // ---- 오케스트레이션 ----
-// 경고: collect()는 tryTest()에서 vitest를 인라인 실행한다. 이 함수를 vitest
-// 테스트 안에서 직접 호출하면 중첩 vitest 실행이 발생한다. collect.test.ts는
-// 순수 헬퍼(loadState/countKb/countCheckboxes)만 테스트하고 collect()는 부르지 않는다.
+// tryTest는 vitest 컨텍스트(process.env.VITEST)면 스폰을 건너뛴다 →
+// 테스트에서 collect() 호출해도 중첩 vitest 재귀 없음(런타임 enforced).
 export function collect(opts: { root?: string } = {}): RawData {
   const root = opts.root ?? process.cwd()
 

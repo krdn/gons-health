@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { loadState, countKb, countCheckboxes } from './collect'
+import { loadState, countKb, countCheckboxes, collect } from './collect'
 
 describe('loadState — 메타파일 fail-loud', () => {
   it('project.name 누락 시 throw', () => {
@@ -47,6 +47,14 @@ describe('countKb — raw 비여과 카운트', () => {
     expect(result.verified).toBe(1)
     expect(result.pending).toBe(2)
     expect(result.entries[0].sourceId).toBe('PMID:111')
+  })
+})
+
+describe('collect — vitest 가드', () => {
+  it('vitest 컨텍스트에서 collect()는 행 안 걸고 test:{ok:false} 반환', () => {
+    const raw = collect()
+    expect(raw.test.ok).toBe(false) // 가드가 vitest 스폰 차단
+    expect(raw.kb.total).toBeGreaterThan(0) // 나머지 수집은 정상
   })
 })
 

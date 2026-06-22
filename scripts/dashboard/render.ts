@@ -71,7 +71,7 @@ function renderActions(model: DashboardModel): string {
 function renderConstraints(model: DashboardModel): string {
   return model.constraints
     .map(
-      (c) => `<div class="con"><div class="c-icon">${c.icon}</div>
+      (c) => `<div class="con"><div class="c-icon">${escapeHtml(c.icon)}</div>
         <div class="c-title">${escapeHtml(c.title)}</div>
         <div class="c-body">${escapeHtml(c.body)}</div></div>`,
     )
