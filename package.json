@@ -26,15 +26,19 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "dashboard": "tsx scripts/dashboard.ts",
+    "typecheck:scripts": "tsc -p scripts/tsconfig.json --noEmit",
     "prepack": "pnpm build"
   },
   "devDependencies": {
+    "@types/node": "^26.0.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tsup": "^8.5.1",
+    "tsx": "^4.22.4",
     "typescript": "^5.6.3",
     "vite": "^6.0.3",
     "vitest": "^2.1.8"

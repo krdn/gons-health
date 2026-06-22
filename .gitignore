@@ -6,3 +6,4 @@ dist-app/
 *.tsbuildinfo
 vite.config.d.ts
 vite.config.js
+.dashboard-test-report.json

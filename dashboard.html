@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>gons-health · 한눈에</title>
+<style>
+  :root {
+    --bg: oklch(16% 0.01 260); --panel: oklch(21% 0.015 260);
+    --panel-2: oklch(25% 0.02 260); --line: oklch(32% 0.02 260);
+    --text: oklch(94% 0.01 260); --muted: oklch(68% 0.015 260);
+    --ok: oklch(72% 0.16 150); --pending: oklch(76% 0.14 75);
+    --danger: oklch(68% 0.2 25); --accent: oklch(72% 0.15 250);
+    --shadow: 0 1px 0 oklch(100% 0 0 / 0.04) inset, 0 8px 24px oklch(0% 0 0 / 0.35);
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; line-height: 1.45; }
+  a { color: var(--accent); text-decoration: none; } a:hover { text-decoration: underline; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 28px 22px 80px; }
+  header { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+    border-bottom: 1px solid var(--line); padding-bottom: 16px; margin-bottom: 22px; }
+  header h1 { font-size: 22px; margin: 0; letter-spacing: -0.02em; }
+  header .tag { font-size: 12px; color: var(--muted); background: var(--panel-2);
+    border: 1px solid var(--line); padding: 3px 9px; border-radius: 999px; }
+  header .one-line { flex-basis: 100%; color: var(--muted); font-size: 14px; margin-top: 4px; }
+  .strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 22px; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 16px 16px 14px; box-shadow: var(--shadow); position: relative; overflow: hidden; }
+  .stat .num { font-size: 30px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+  .stat .lbl { font-size: 12px; color: var(--muted); margin-top: 7px; }
+  .stat.good .num { color: var(--ok); } .stat.warn .num { color: var(--pending); }
+  .stat .spark { position: absolute; right: 12px; top: 12px; font-size: 16px; opacity: .55; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted);
+    margin: 30px 0 12px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .gates { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .gate { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 16px; box-shadow: var(--shadow); }
+  .gate .g-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .gate .g-num { font-size: 11px; font-weight: 700; color: var(--bg); background: var(--accent);
+    width: 20px; height: 20px; border-radius: 6px; display: grid; place-items: center; flex: none; }
+  .gate .g-name { font-weight: 600; font-size: 15px; }
+  .gate .g-file { font-size: 11px; color: var(--muted); font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+  .gate.flow { border-color: oklch(72% 0.15 250 / 0.4); }
+  .gate .g-body { font-size: 13px; color: var(--muted); margin-top: 8px; }
+  .flow-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 14px 16px; box-shadow: var(--shadow); font-size: 13px; margin-bottom: 14px; }
+  .flow-row .node { background: var(--panel-2); border: 1px solid var(--line);
+    padding: 7px 11px; border-radius: 8px; font-family: ui-monospace, Menlo, monospace; font-size: 12px; }
+  .flow-row .node.gate-mark { border-color: var(--ok); color: var(--ok); }
+  .flow-row .arr { color: var(--muted); }
+  .flow-row .flow-note { margin-left: auto; font-size: 12px; }
+  .dual { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .art { background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    padding: 16px; box-shadow: var(--shadow); }
+  .art .a-name { font-family: ui-monospace, Menlo, monospace; font-size: 14px; font-weight: 600; }
+  .art .a-cmd { font-size: 12px; color: var(--accent); font-family: ui-monospace, Menlo, monospace; margin-top: 6px; }
+  .art .a-out { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .art .a-use { font-size: 12.5px; color: var(--muted); margin-top: 8px; }
+  .kb-bar-wrap { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 18px; box-shadow: var(--shadow); }
+  .kb-bar-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+  .kb-bar-head .pct { font-size: 26px; font-weight: 700; color: var(--pending); }
+  .kb-bar { height: 14px; border-radius: 999px; background: var(--panel-2);
+    overflow: hidden; border: 1px solid var(--line); }
+  .kb-bar .fill { height: 100%; background: linear-gradient(90deg, var(--ok), oklch(78% 0.14 130));
+    border-radius: 999px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .chip { display: inline-flex; align-items: center; gap: 7px; padding: 7px 11px;
+    border-radius: 9px; font-size: 12.5px; border: 1px solid var(--line); background: var(--panel-2); cursor: default; }
+  .chip .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .chip.v { border-color: oklch(72% 0.16 150 / 0.45); }
+  .chip.v .dot { background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+  .chip.p { opacity: .82; } .chip.p .dot { background: var(--pending); }
+  .chip .ev { font-size: 10px; color: var(--muted); border: 1px solid var(--line);
+    border-radius: 5px; padding: 1px 5px; }
+  .chip .src { font-size: 10px; color: var(--ok); font-family: ui-monospace, Menlo, monospace; }
+  .ms { background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    padding: 13px 15px; box-shadow: var(--shadow); margin-bottom: 8px; }
+  .ms-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .ms-title { font-weight: 600; font-size: 14px; }
+  .ms-state { font-size: 11px; color: var(--muted); }
+  .ms-bar { height: 8px; border-radius: 999px; background: var(--panel-2); overflow: hidden; }
+  .ms-fill { height: 100%; background: var(--accent); border-radius: 999px; }
+  .ms.done .ms-fill { background: var(--ok); }
+  .actions { display: grid; gap: 10px; }
+  .act { display: flex; gap: 14px; align-items: flex-start; background: var(--panel);
+    border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 12px;
+    padding: 14px 16px; box-shadow: var(--shadow); }
+  .act.prio { border-left-color: var(--pending); }
+  .act .rank { font-size: 12px; font-weight: 700; color: var(--muted); width: 18px; flex: none; }
+  .act .a-title { font-weight: 600; font-size: 14.5px; }
+  .act .a-why { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+  .constr { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .con { background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px; box-shadow: var(--shadow); font-size: 13px; }
+  .con .c-icon { font-size: 18px; } .con .c-title { font-weight: 600; margin: 6px 0 4px; }
+  .con .c-body { color: var(--muted); font-size: 12.5px; }
+  .commit, .issue { display: flex; gap: 10px; padding: 7px 0; font-size: 13px;
+    border-bottom: 1px solid var(--line); }
+  .commit code { color: var(--accent); font-family: ui-monospace, Menlo, monospace; font-size: 12px; }
+  .commit span { color: var(--muted); }
+  .list-wrap { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 8px 16px; box-shadow: var(--shadow); }
+  .empty { color: var(--muted); font-size: 13px; padding: 12px 0; }
+  .help-toggle { width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--line);
+    background: var(--panel-2); color: var(--muted); font-size: 11px; cursor: pointer; padding: 0;
+    line-height: 1; } .help-toggle:hover { color: var(--text); border-color: var(--accent); }
+  .help-body { background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px;
+    padding: 12px 14px; margin: 8px 0 12px; font-size: 13px; color: var(--muted); }
+  .help-body p { margin: 0 0 6px; } .help-body p:last-child { margin: 0; }
+  .help-dynamic { color: var(--pending); }
+  .warn-box { margin-top: 12px; background: oklch(68% 0.2 25 / 0.1); border: 1px solid oklch(68% 0.2 25 / 0.35); border-radius: 10px; padding: 11px 13px; font-size: 12.5px; }
+  .warn-box b { color: var(--danger); }
+  .kb-note { font-size: 12px; color: var(--muted); margin-top: 10px; }
+  footer { margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--line);
+    font-size: 12px; color: var(--muted); display: flex; justify-content: space-between;
+    flex-wrap: wrap; gap: 8px; }
+  @media (max-width: 760px) { .strip, .gates, .constr { grid-template-columns: 1fr 1fr; }
+    .dual { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🛡 gons-health</h1>
+    <span class="tag">1단계: 앵커 KB 체커</span>
+    <span class="tag">active</span>
+    <p class="one-line">한국 약사용 약물↔건기식/식품 상호작용 cite-or-abstain 체커 — 환각 경고를 약사에게 절대 보여주지 않는다는 단일 목표 위의 결정론적 closed-set 조회 도구.</p>
+  </header>
+
+  <div class="strip"><div class="stat good"><span class="spark">✅</span>
+        <div class="num">62/62</div>
+        <div class="lbl">테스트 통과 · 빌드 OK</div></div>
+<div class="stat warn"><span class="spark">⏳</span>
+        <div class="num">2/10</div>
+        <div class="lbl">KB 엔트리 verified</div></div>
+<div class="stat neutral"><span class="spark">🔒</span>
+        <div class="num">3</div>
+        <div class="lbl">안전 게이트 (합성)</div></div>
+<div class="stat neutral"><span class="spark">📦</span>
+        <div class="num">2</div>
+        <div class="lbl">산출물: 앱 + 코어패키지</div></div></div>
+
+  <h2>마일스톤 <button class="help-toggle" data-help="milestones" aria-label="도움말">?</button>
+    <div class="help-body" id="help-milestones" hidden>
+      <p>마일스톤 완료 여부는 사람이 state로 판단한다(plan 체크박스는 실행 후 갱신 안 될 수 있어 1차 소스로 쓰지 않음). 진행 중 마일스톤만 plan 체크박스로 세부 진행을 보조 표시한다.</p>
+      
+    </div></h2>
+  <div class="ms done">
+        <div class="ms-head"><span class="ms-title">앵커 KB 체커 MVP</span>
+          <span class="ms-state">완료</span></div>
+        <div class="ms-bar"><div class="ms-fill" style="width:100%"></div></div>
+      </div>
+<div class="ms in_progress">
+        <div class="ms-head"><span class="ms-title">KB 자동 검증 파이프라인</span>
+          <span class="ms-state">진행 중</span></div>
+        <div class="ms-bar"><div class="ms-fill" style="width:0%"></div></div>
+      </div>
+<div class="ms in_progress">
+        <div class="ms-head"><span class="ms-title">살아있는 대시보드</span>
+          <span class="ms-state">진행 중 · 2/42 태스크</span></div>
+        <div class="ms-bar"><div class="ms-fill" style="width:5%"></div></div>
+      </div>
+<div class="ms todo">
+        <div class="ms-head"><span class="ms-title">약사 인터뷰 5~10명 수요 검증</span>
+          <span class="ms-state">예정</span></div>
+        <div class="ms-bar"><div class="ms-fill" style="width:0%"></div></div>
+      </div>
+
+  <h2>안전 모델 — 데이터 흐름과 3중 게이트 <button class="help-toggle" data-help="safetyGates" aria-label="도움말">?</button>
+    <div class="help-body" id="help-safetyGates" hidden>
+      <p>3중 게이트는 합성으로만 안전하다. verified 필터·ABSTAIN 상수·closed-set 어휘 중 하나라도 무너지면 미검증/환각 경고가 약사에게 샌다.</p>
+      
+    </div></h2>
+  <div class="flow-row"><span class="node">interactions.json</span><span class="arr">→</span>
+<span class="node gate-mark">validateKb()</span><span class="arr">→</span>
+<span class="node gate-mark">lookup()</span><span class="arr">→</span>
+<span class="node">ResultCard</span>
+    <span class="arr flow-note">하나라도 무너지면 환각 경고가 샌다</span></div>
+  <div class="gates"><div class="gate flow">
+        <div class="g-head"><span class="g-num">1</span>
+          <span class="g-name">verified 게이트</span></div>
+        <div class="g-file">src/lib/lookup.ts</div>
+        <div class="g-body">verified === true 인 엔트리만 반환. 약사가 1차문헌과 대조한 것만 노출. 나머지는 결과에 절대 안 나옴.</div></div>
+<div class="gate flow">
+        <div class="g-head"><span class="g-num">2</span>
+          <span class="g-name">abstain 상수</span></div>
+        <div class="g-file">ABSTAIN_MESSAGE</div>
+        <div class="g-body">미스 시 문구를 생성하지 않고 고정 상수만 반환. '안전함'을 절대 뜻하지 않음.</div></div>
+<div class="gate flow">
+        <div class="g-head"><span class="g-num">3</span>
+          <span class="g-name">closed-set 어휘</span></div>
+        <div class="g-file">src/data/vocabulary.ts</div>
+        <div class="g-body">입력은 드롭다운 고정 목록뿐. 자유 텍스트 NLP 매칭 원천 배제. KB 키와 정확 일치 필수.</div></div></div>
+
+  <h2>KB 검증 현황 <button class="help-toggle" data-help="kbStatus" aria-label="도움말">?</button>
+    <div class="help-body" id="help-kbStatus" hidden>
+      <p>lookup은 verified=true 엔트리만 반환한다. PENDING은 '의심스러우면 기권' 설계가 작동 중인 것이지 버그가 아니다. 다만 도구 효용은 verified 개수에 비례한다.</p>
+      <p class="help-dynamic">▸ 검증 20% — 8개 PENDING이 병목. 도구 효용은 verified(2개)에 비례한다.</p>
+    </div></h2>
+  <div class="kb-bar-wrap">
+    <div class="kb-bar-head"><div>검증된 엔트리 비율</div><div class="pct">20%</div></div>
+    <div class="kb-bar"><div class="fill" style="width:20%"></div></div>
+    <div class="kb-note">검증 20% — 8개 PENDING이 병목. 도구 효용은 verified(2개)에 비례한다.</div>
+    <div class="chips"><span class="chip p"><span class="dot"></span>항응고제 × 은행
+        <span class="ev">중·avoid</span></span>
+<span class="chip v"><span class="dot"></span>항응고제 × 단삼
+        <span class="ev">중·avoid</span><span class="src">PMID:11302416</span></span>
+<span class="chip p"><span class="dot"></span>항응고제 × 당귀
+        <span class="ev">약·avoid</span></span>
+<span class="chip p"><span class="dot"></span>항응고제 × 마늘
+        <span class="ev">약·monitor</span></span>
+<span class="chip p"><span class="dot"></span>항응고제 × 나토키나제
+        <span class="ev">약·avoid</span></span>
+<span class="chip p"><span class="dot"></span>항응고제 × 홍삼
+        <span class="ev">중·monitor</span></span>
+<span class="chip v"><span class="dot"></span>갑상선약 × 칼슘
+        <span class="ev">강·spacing</span><span class="src">PMID:10838651</span></span>
+<span class="chip p"><span class="dot"></span>갑상선약 × 철분
+        <span class="ev">강·spacing</span></span>
+<span class="chip p"><span class="dot"></span>퀴놀론·테트라사이클린 항생제 × 칼슘
+        <span class="ev">강·spacing</span></span>
+<span class="chip p"><span class="dot"></span>항응고제 × 비타민K
+        <span class="ev">강·monitor</span></span></div>
+  </div>
+
+  <h2>다음 행동 <button class="help-toggle" data-help="nextActions" aria-label="도움말">?</button>
+    <div class="help-body" id="help-nextActions" hidden>
+      <p>코드에서 끌어올 수 없는 우선순위 판단. 임팩트 순으로 사람이 project-state.json에서 관리한다.</p>
+      
+    </div></h2>
+  <div class="actions"><div class="act prio"><span class="rank">1</span>
+        <div><div class="a-title">8개 PENDING 엔트리 1차문헌 검증 → verified 승격</div>
+        <div class="a-why">KB가 실질 2개라 도구 효용이 거의 안 나옴. evidence_level 강인 철분·퀴놀론칼슘·비타민K가 검증 쉬우면서 임팩트 큼.</div></div></div>
+<div class="act"><span class="rank">2</span>
+        <div><div class="a-title">약사 인터뷰 5~10명 — 수요 검증</div>
+        <div class="a-why">B 아키텍처를 '수요는 내가 안다'로 확정했으나 외부 검증 미완.</div></div></div>
+<div class="act"><span class="rank">3</span>
+        <div><div class="a-title">harness 입력 강화 스펙 구현</div>
+        <div class="a-why">docs/harness-tool-input-hardening-spec-20260621.md 에 설계안 존재.</div></div></div></div>
+
+  <h2>듀얼 산출물 구조 <button class="help-toggle" data-help="dualArtifact" aria-label="도움말">?</button>
+    <div class="help-body" id="help-dualArtifact" hidden>
+      <p>이 repo는 standalone 웹앱이면서 @krdn/gons-health 코어 패키지다. dist/는 git에 커밋해야 GitHub 의존성 소비처가 깨지지 않는다.</p>
+      
+    </div></h2>
+  <div class="dual"><div class="art">
+        <div class="a-name">@krdn/gons-health</div>
+        <div class="a-cmd">npm run build → dist/</div>
+        <div class="a-out">tsup · React 의존 0인 순수 코어</div>
+        <div class="a-use">loadKb / lookup / validateKb / 어휘 / 타입만 export. 다른 프로젝트에 GitHub 태그 의존성으로 임베드.</div></div>
+<div class="art">
+        <div class="a-name">standalone 웹앱</div>
+        <div class="a-cmd">npm run build:app → dist-app/</div>
+        <div class="a-out">tsc + vite · React UI 포함</div>
+        <div class="a-use">단독 실행 웹앱. ResultCard 등 UI 컴포넌트는 코어 패키지에서 제외(소비처 React 충돌 방지).</div></div></div>
+  <div class="warn-box">⚠️ 함정: dist/ 는 반드시 git에 커밋. GitHub 의존성은 git-archive 타르볼이라 tracked 파일만 받음 → gitignore하면 소비처가 빈 패키지를 받아 깨짐. 코드 변경 시 dist/ 재빌드 + package.json 함께 커밋.</div>
+
+  <h2>최근 작업</h2>
+  <div class="list-wrap"><div class="commit"><code>69ca9d9</code>
+        <span>docs: 대시보드 스킬 트리거 문구·사용법 문서 추가</span></div>
+<div class="commit"><code>acde0a3</code>
+        <span>feat: 대시보드 오케스트레이터 + 생성 산출물 전환</span></div>
+<div class="commit"><code>645f17e</code>
+        <span>fix: 원본 대시보드의 항상-보이는 경고 요소 복원 (warn-box·gate.flow·kb-note)</span></div>
+<div class="commit"><code>395b900</code>
+        <span>feat: 대시보드 HTML 렌더 — 기존 디자인 포팅 + ? 토글 도움말</span></div>
+<div class="commit"><code>3bda859</code>
+        <span>build: scripts 타입체크 설정을 scripts/tsconfig.json으로 일원화</span></div>
+<div class="commit"><code>4dd8f18</code>
+        <span>feat: 대시보드 순수 집계 — 진행률·동적해설·2층 도움말</span></div>
+<div class="commit"><code>3f3d2b5</code>
+        <span>build: 대시보드 생성기 타입체크 셋업 (@types/node + tsconfig.scripts.json)</span></div>
+<div class="commit"><code>92af078</code>
+        <span>feat: 대시보드 소스 수집 (메타 fail-loud, 보조 실패격리, KB raw 카운트)</span></div>
+<div class="commit"><code>049f86e</code>
+        <span>feat: 대시보드 의도 메타파일 부트스트랩 (현재 dashboard.html 콘텐츠 이관)</span></div>
+<div class="commit"><code>bce7c26</code>
+        <span>feat: 대시보드 생성기 타입 정의</span></div></div>
+
+  <h2>GitHub 이슈 (할 일)</h2>
+  <div class="list-wrap"><div class="empty">열린 GitHub 이슈 없음</div></div>
+
+  <h2>범위 제약 <button class="help-toggle" data-help="constraints" aria-label="도움말">?</button>
+    <div class="help-body" id="help-constraints" hidden>
+      <p>건드리면 안 되는 제품 결정. 범위 확장 전 반드시 재검토.</p>
+      
+    </div></h2>
+  <div class="constr"><div class="con"><div class="c-icon">🚫</div>
+        <div class="c-title">사주·한의학 임상경로 배제</div>
+        <div class="c-body">임상 신뢰성 차단 요인. 한약은 제한적 안전선에서만.</div></div>
+<div class="con"><div class="c-icon">⚖️</div>
+        <div class="c-title">개인화 = SaMD 위험</div>
+        <div class="c-body">환자 프로필 기반 개인화 → 의료기기 분류 위험. 확장 전 반드시 검토.</div></div>
+<div class="con"><div class="c-icon">ℹ️</div>
+        <div class="c-title">정보 제공용</div>
+        <div class="c-body">진단·처방 아님. 약사 검토 게이트가 전제.</div></div></div>
+
+  <footer>
+    <span>생성: 2026-06-22 · 69ca9d9</span>
+    <span>npm run dashboard 로 갱신 · 의도는 project-state.json</span>
+  </footer>
+</div>
+<script>
+  document.querySelectorAll('.help-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('data-help');
+      var body = document.getElementById('help-' + id);
+      if (body) body.hidden = !body.hidden;
+    });
+  });
+</script>
+</body>
+</html>
