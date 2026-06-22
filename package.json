@@ -28,7 +28,8 @@
     "test:watch": "vitest",
     "prepack": "pnpm build",
     "verify:kb": "tsx scripts/verifyKb.ts",
-    "verify:apply": "tsx scripts/applyVerdict.ts"
+    "verify:apply": "tsx scripts/applyVerdict.ts",
+    "verify:promote": "tsx scripts/promoteQueue.ts"
   },
   "devDependencies": {
     "@types/node": "^26.0.0",
