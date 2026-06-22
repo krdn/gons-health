@@ -27,7 +27,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "dashboard": "tsx scripts/dashboard.ts",
-    "typecheck:scripts": "tsc -p tsconfig.scripts.json --noEmit",
+    "typecheck:scripts": "tsc -p scripts/tsconfig.json --noEmit",
     "prepack": "pnpm build"
   },
   "devDependencies": {
