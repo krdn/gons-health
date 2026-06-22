@@ -48,6 +48,32 @@ export function validateKb(entries: unknown): InteractionEntry[] {
     // verified는 boolean 필수 — 누락 시 명시적 에러로 드러냄
     if (typeof entry.verified !== 'boolean')
       throw new Error(`${ctx}: verified 누락 또는 boolean 아님`)
+    // auto_verified는 옵셔널 — 있으면 boolean 강제
+    if (entry.auto_verified !== undefined && typeof entry.auto_verified !== 'boolean')
+      throw new Error(`${ctx}: auto_verified는 boolean이어야 함`)
+    // auto_review는 옵셔널 — 있으면 status 조건부 검증
+    if (entry.auto_review !== undefined) {
+      const ar = entry.auto_review as Record<string, unknown>
+      if (ar.status !== 'pass' && ar.status !== 'fail')
+        throw new Error(`${ctx}: auto_review.status는 pass|fail`)
+      // 공통 필드
+      if (
+        typeof ar.direction_match !== 'boolean' ||
+        typeof ar.reason !== 'string' ||
+        typeof ar.pmid !== 'string' ||
+        typeof ar.evidence_sentence !== 'string' ||
+        !isNonEmptyString(ar.reviewed_date)
+      )
+        throw new Error(`${ctx}: auto_review 필드 누락/부적합`)
+      // status별 강제: pass는 실제 근거 필수(안전 불변식), fail은 사유 필수
+      if (ar.status === 'pass') {
+        if (!isNonEmptyString(ar.pmid) || !isNonEmptyString(ar.evidence_sentence))
+          throw new Error(`${ctx}: pass 판정은 pmid·evidence_sentence 필수 (근거 없는 통과 금지)`)
+      } else {
+        if (!isNonEmptyString(ar.reason))
+          throw new Error(`${ctx}: fail 판정은 reason 필수`)
+      }
+    }
 
     return entry as unknown as InteractionEntry
   })
