@@ -1,0 +1,118 @@
+{
+  "project": {
+    "name": "gons-health",
+    "tagline": "한국 약사용 약물↔건기식/식품 상호작용 cite-or-abstain 체커 — 환각 경고를 약사에게 절대 보여주지 않는다는 단일 목표 위의 결정론적 closed-set 조회 도구.",
+    "phase": "1단계: 앵커 KB 체커",
+    "status": "active"
+  },
+  "milestones": [
+    {
+      "id": "m1",
+      "title": "앵커 KB 체커 MVP",
+      "state": "done"
+    },
+    {
+      "id": "m2",
+      "title": "KB 자동 검증 파이프라인",
+      "state": "in_progress",
+      "planFile": "docs/superpowers/plans/2026-06-22-kb-auto-verification.md"
+    },
+    {
+      "id": "m3",
+      "title": "살아있는 대시보드",
+      "state": "in_progress",
+      "planFile": "docs/superpowers/plans/2026-06-22-living-dashboard.md"
+    },
+    {
+      "id": "m4",
+      "title": "약사 인터뷰 5~10명 수요 검증",
+      "state": "todo"
+    }
+  ],
+  "nextActions": [
+    {
+      "rank": 1,
+      "title": "8개 PENDING 엔트리 1차문헌 검증 → verified 승격",
+      "why": "KB가 실질 2개라 도구 효용이 거의 안 나옴. evidence_level 강인 철분·퀴놀론칼슘·비타민K가 검증 쉬우면서 임팩트 큼.",
+      "priority": "high"
+    },
+    {
+      "rank": 2,
+      "title": "약사 인터뷰 5~10명 — 수요 검증",
+      "why": "B 아키텍처를 '수요는 내가 안다'로 확정했으나 외부 검증 미완.",
+      "priority": "medium"
+    },
+    {
+      "rank": 3,
+      "title": "harness 입력 강화 스펙 구현",
+      "why": "docs/harness-tool-input-hardening-spec-20260621.md 에 설계안 존재.",
+      "priority": "medium"
+    }
+  ],
+  "constraints": [
+    {
+      "icon": "🚫",
+      "title": "사주·한의학 임상경로 배제",
+      "body": "임상 신뢰성 차단 요인. 한약은 제한적 안전선에서만."
+    },
+    {
+      "icon": "⚖️",
+      "title": "개인화 = SaMD 위험",
+      "body": "환자 프로필 기반 개인화 → 의료기기 분류 위험. 확장 전 반드시 검토."
+    },
+    {
+      "icon": "ℹ️",
+      "title": "정보 제공용",
+      "body": "진단·처방 아님. 약사 검토 게이트가 전제."
+    }
+  ],
+  "gates": [
+    {
+      "num": "1",
+      "name": "verified 게이트",
+      "file": "src/lib/lookup.ts",
+      "body": "verified === true 인 엔트리만 반환. 약사가 1차문헌과 대조한 것만 노출. 나머지는 결과에 절대 안 나옴."
+    },
+    {
+      "num": "2",
+      "name": "abstain 상수",
+      "file": "ABSTAIN_MESSAGE",
+      "body": "미스 시 문구를 생성하지 않고 고정 상수만 반환. '안전함'을 절대 뜻하지 않음."
+    },
+    {
+      "num": "3",
+      "name": "closed-set 어휘",
+      "file": "src/data/vocabulary.ts",
+      "body": "입력은 드롭다운 고정 목록뿐. 자유 텍스트 NLP 매칭 원천 배제. KB 키와 정확 일치 필수."
+    }
+  ],
+  "flow": [
+    { "label": "interactions.json", "gate": false },
+    { "label": "validateKb()", "gate": true },
+    { "label": "lookup()", "gate": true },
+    { "label": "ResultCard", "gate": false }
+  ],
+  "artifacts": [
+    {
+      "name": "@krdn/gons-health",
+      "cmd": "npm run build → dist/",
+      "out": "tsup · React 의존 0인 순수 코어",
+      "use": "loadKb / lookup / validateKb / 어휘 / 타입만 export. 다른 프로젝트에 GitHub 태그 의존성으로 임베드."
+    },
+    {
+      "name": "standalone 웹앱",
+      "cmd": "npm run build:app → dist-app/",
+      "out": "tsc + vite · React UI 포함",
+      "use": "단독 실행 웹앱. ResultCard 등 UI 컴포넌트는 코어 패키지에서 제외(소비처 React 충돌 방지)."
+    }
+  ],
+  "help": {
+    "stats": "상단 지표는 코드에서 자동 집계된 사실이다. 테스트·KB·산출물 수치는 매 생성 시 파일에서 다시 읽는다.",
+    "safetyGates": "3중 게이트는 합성으로만 안전하다. verified 필터·ABSTAIN 상수·closed-set 어휘 중 하나라도 무너지면 미검증/환각 경고가 약사에게 샌다.",
+    "kbStatus": "lookup은 verified=true 엔트리만 반환한다. PENDING은 '의심스러우면 기권' 설계가 작동 중인 것이지 버그가 아니다. 다만 도구 효용은 verified 개수에 비례한다.",
+    "milestones": "마일스톤 완료 여부는 사람이 state로 판단한다(plan 체크박스는 실행 후 갱신 안 될 수 있어 1차 소스로 쓰지 않음). 진행 중 마일스톤만 plan 체크박스로 세부 진행을 보조 표시한다.",
+    "nextActions": "코드에서 끌어올 수 없는 우선순위 판단. 임팩트 순으로 사람이 project-state.json에서 관리한다.",
+    "dualArtifact": "이 repo는 standalone 웹앱이면서 @krdn/gons-health 코어 패키지다. dist/는 git에 커밋해야 GitHub 의존성 소비처가 깨지지 않는다.",
+    "constraints": "건드리면 안 되는 제품 결정. 범위 확장 전 반드시 재검토."
+  }
+}
