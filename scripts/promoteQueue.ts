@@ -2,6 +2,7 @@
 // 승격은 명시적 사람 행동 — 이 스크립트는 자동으로 verified를 켜지 않는다(CLI 인자 필요).
 import { readFileSync, writeFileSync } from 'node:fs'
 import { pathToFileURL } from 'node:url'
+import { validateKb } from '../src/lib/validateKb'
 
 export interface PromotableEntry {
   id: string
@@ -87,6 +88,8 @@ function main() {
     console.warn(`[warn] 승격 후보 아님(건너뜀): ${skipped.join(', ')} — auto_verified=true & verified=false 만 승격 가능`)
   }
   const next = promote(kb, ids, today())
+  // write 전 스키마 자체검증 — 위반 시 throw로 드러내 on-disk KB 오염을 방지한다
+  validateKb(next)
   writeFileSync(kbPath, JSON.stringify(next, null, 2) + '\n')
   console.log(`승격 완료: ${ids.length}개 -> verified=true. 다음: npm test && npm run build 후 커밋.`)
 }

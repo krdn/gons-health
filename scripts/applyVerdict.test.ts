@@ -42,4 +42,28 @@ describe('mergeVerdict', () => {
     mergeVerdict(baseEntry, v, '2026-06-22')
     expect((baseEntry as any).auto_verified).toBeUndefined()
   })
+
+  test('pass 판정인데 evidence_sentence가 비면 auto_verified=false (환각 quote 차단)', () => {
+    const v = {
+      id: 'e-1', status: 'pass' as const, pmid: 'PMID:1',
+      evidence_sentence: '', direction_match: true, reason: '',
+    }
+    const out = mergeVerdict(baseEntry, v, '2026-06-22')
+    expect(out.auto_verified).toBe(false)
+    // validateKb pass-branch가 pmid·evidence_sentence 필수를 강제하므로 status도 fail로 강등
+    expect(out.auto_review?.status).toBe('fail')
+    // reason에 강등 사유 포함
+    expect(out.auto_review?.reason).toMatch(/강등/)
+  })
+
+  test('bare 숫자 pmid는 PMID: 접두로 정규화된다', () => {
+    const v = {
+      id: 'e-1', status: 'pass' as const, pmid: '42136239',
+      evidence_sentence: 's', direction_match: true, reason: '',
+    }
+    const out = mergeVerdict(baseEntry, v, '2026-06-22')
+    expect(out.auto_review?.pmid).toBe('PMID:42136239')
+    // auto_verified는 pass + non-empty evidence_sentence이므로 true
+    expect(out.auto_verified).toBe(true)
+  })
 })
