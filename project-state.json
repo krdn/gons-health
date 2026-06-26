@@ -9,19 +9,19 @@
     {
       "id": "m1",
       "title": "앵커 KB 체커 MVP",
-      "state": "done"
+      "state": "done",
+      "anchor": "a025d6d"
     },
     {
       "id": "m2",
       "title": "KB 자동 검증 파이프라인",
-      "state": "in_progress",
-      "planFile": "docs/superpowers/plans/2026-06-22-kb-auto-verification.md"
+      "state": "parked"
     },
     {
       "id": "m3",
       "title": "살아있는 대시보드",
-      "state": "in_progress",
-      "planFile": "docs/superpowers/plans/2026-06-22-living-dashboard.md"
+      "state": "done",
+      "anchor": "a95fbaf"
     },
     {
       "id": "m4",
