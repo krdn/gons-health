@@ -5,6 +5,7 @@ var interactions_default = [
     drug_class: "\uD56D\uC751\uACE0\uC81C/\uD56D\uD608\uC18C\uD310\uC81C",
     drug_ingredient: ["warfarin", "apixaban", "aspirin", "clopidogrel"],
     supplement: "\uC740\uD589 (Ginkgo biloba)",
+    supplement_en: "Ginkgo biloba",
     severity: "high",
     action_type: "avoid",
     mechanism: "\uD608\uC18C\uD310 \uC751\uC9D1 \uC5B5\uC81C \uBC0F \uD56D\uC751\uACE0 \uD6A8\uACFC \uC0C1\uAC00\uC791\uC6A9\uC73C\uB85C \uCD9C\uD608 \uC704\uD5D8 \uC99D\uAC00",
@@ -25,6 +26,7 @@ var interactions_default = [
     drug_class: "\uD56D\uC751\uACE0\uC81C/\uD56D\uD608\uC18C\uD310\uC81C",
     drug_ingredient: ["warfarin"],
     supplement: "\uB2E8\uC0BC (Danshen)",
+    supplement_en: "Salvia miltiorrhiza Danshen",
     severity: "high",
     action_type: "avoid",
     mechanism: "\uB2E8\uC0BC\uC774 \uC640\uD30C\uB9B0\uC758 \uD761\uC218\xB7\uB300\uC0AC\uC5D0 \uC601\uD5A5\uC744 \uC8FC\uC5B4 \uD56D\uC751\uACE0 \uD6A8\uACFC\uB97C \uC99D\uAC15, \uCD9C\uD608 \uC704\uD5D8 \uBC0F INR \uC0C1\uC2B9",
@@ -45,6 +47,7 @@ var interactions_default = [
     drug_class: "\uD56D\uC751\uACE0\uC81C/\uD56D\uD608\uC18C\uD310\uC81C",
     drug_ingredient: ["warfarin"],
     supplement: "\uB2F9\uADC0 (Dong quai)",
+    supplement_en: "Dong quai Angelica sinensis",
     severity: "high",
     action_type: "avoid",
     mechanism: "\uB2F9\uADC0\uC758 \uCFE0\uB9C8\uB9B0 \uC131\uBD84\uC774 \uD56D\uC751\uACE0 \uD6A8\uACFC \uC0C1\uAC00\uC791\uC6A9\uC73C\uB85C \uCD9C\uD608 \uC704\uD5D8 \uC99D\uAC00",
@@ -65,6 +68,7 @@ var interactions_default = [
     drug_class: "\uD56D\uC751\uACE0\uC81C/\uD56D\uD608\uC18C\uD310\uC81C",
     drug_ingredient: ["warfarin", "aspirin", "clopidogrel"],
     supplement: "\uB9C8\uB298",
+    supplement_en: "garlic Allium sativum",
     severity: "medium",
     action_type: "monitor",
     mechanism: "\uB9C8\uB298 \uACE0\uC6A9\uB7C9\uC774 \uD608\uC18C\uD310 \uC751\uC9D1\uC744 \uC5B5\uC81C\uD558\uC5EC \uCD9C\uD608 \uC704\uD5D8 \uAC00\uC0B0",
@@ -85,6 +89,7 @@ var interactions_default = [
     drug_class: "\uD56D\uC751\uACE0\uC81C/\uD56D\uD608\uC18C\uD310\uC81C",
     drug_ingredient: ["warfarin", "apixaban"],
     supplement: "\uB098\uD1A0\uD0A4\uB098\uC81C",
+    supplement_en: "nattokinase",
     severity: "high",
     action_type: "avoid",
     mechanism: "\uB098\uD1A0\uD0A4\uB098\uC81C\uC758 \uC12C\uC720\uC18C \uC6A9\uD574\xB7\uD56D\uC751\uACE0 \uC791\uC6A9\uC774 \uCD9C\uD608 \uC704\uD5D8 \uC0C1\uAC00",
@@ -105,6 +110,7 @@ var interactions_default = [
     drug_class: "\uD56D\uC751\uACE0\uC81C/\uD56D\uD608\uC18C\uD310\uC81C",
     drug_ingredient: ["warfarin"],
     supplement: "\uD64D\uC0BC",
+    supplement_en: "red ginseng Panax",
     severity: "medium",
     action_type: "monitor",
     mechanism: "\uC778\uC0BC\uC774 \uC640\uD30C\uB9B0\uC758 \uD56D\uC751\uACE0 \uD6A8\uACFC\uB97C \uAC10\uC18C\uC2DC\uD0AC \uC218 \uC788\uC74C(INR \uC800\uD558 \uBCF4\uACE0)",
@@ -125,6 +131,7 @@ var interactions_default = [
     drug_class: "\uAC11\uC0C1\uC120\uC57D",
     drug_ingredient: ["levothyroxine"],
     supplement: "\uCE7C\uC298",
+    supplement_en: "calcium carbonate",
     severity: "medium",
     action_type: "spacing",
     mechanism: "\uCE7C\uC298(\uD0C4\uC0B0\uCE7C\uC298)\uC774 levothyroxine \uD761\uC218\uB97C \uC800\uD574\uD558\uC5EC \uAC11\uC0C1\uC120\uAE30\uB2A5 \uC800\uD558 \uBC0F TSH \uC0C1\uC2B9 \uC720\uBC1C",
@@ -145,6 +152,7 @@ var interactions_default = [
     drug_class: "\uAC11\uC0C1\uC120\uC57D",
     drug_ingredient: ["levothyroxine"],
     supplement: "\uCCA0\uBD84",
+    supplement_en: "iron ferrous",
     severity: "medium",
     action_type: "spacing",
     mechanism: "\uCCA0\uBD84\uC774 levothyroxine\uC640 \uBCF5\uD569\uCCB4 \uD615\uC131\uC73C\uB85C \uD761\uC218 \uC800\uD574",
@@ -165,6 +173,7 @@ var interactions_default = [
     drug_class: "\uD034\uB180\uB860\xB7\uD14C\uD2B8\uB77C\uC0AC\uC774\uD074\uB9B0 \uD56D\uC0DD\uC81C",
     drug_ingredient: ["ciprofloxacin", "levofloxacin", "doxycycline"],
     supplement: "\uCE7C\uC298",
+    supplement_en: "calcium carbonate",
     severity: "medium",
     action_type: "spacing",
     mechanism: "\uCE7C\uC298 \uB4F1 \uB2E4\uAC00\uC591\uC774\uC628\uC774 \uD034\uB180\uB860\xB7\uD14C\uD2B8\uB77C\uC0AC\uC774\uD074\uB9B0\uACFC chelation\uC73C\uB85C \uD761\uC218 \uC800\uD574",
@@ -185,6 +194,7 @@ var interactions_default = [
     drug_class: "\uD56D\uC751\uACE0\uC81C/\uD56D\uD608\uC18C\uD310\uC81C",
     drug_ingredient: ["warfarin"],
     supplement: "\uBE44\uD0C0\uBBFCK (\uB179\uD669\uC0C9\uCC44\uC18C \uB2E4\uB7C9)",
+    supplement_en: "vitamin K",
     severity: "medium",
     action_type: "monitor",
     mechanism: "\uBE44\uD0C0\uBBFCK\uAC00 \uC640\uD30C\uB9B0\uC758 \uD56D\uC751\uACE0 \uD6A8\uACFC\uB97C \uAE38\uD56D\uD558\uC5EC INR \uC800\uD558",
@@ -234,6 +244,22 @@ function validateKb(entries) {
     if (!isNonEmptyString(entry.last_reviewed)) throw new Error(`${ctx}: last_reviewed \uB204\uB77D`);
     if (typeof entry.verified !== "boolean")
       throw new Error(`${ctx}: verified \uB204\uB77D \uB610\uB294 boolean \uC544\uB2D8`);
+    if (entry.auto_verified !== void 0 && typeof entry.auto_verified !== "boolean")
+      throw new Error(`${ctx}: auto_verified\uB294 boolean\uC774\uC5B4\uC57C \uD568`);
+    if (entry.auto_review !== void 0) {
+      const ar = entry.auto_review;
+      if (ar.status !== "pass" && ar.status !== "fail")
+        throw new Error(`${ctx}: auto_review.status\uB294 pass|fail`);
+      if (typeof ar.direction_match !== "boolean" || typeof ar.reason !== "string" || typeof ar.pmid !== "string" || typeof ar.evidence_sentence !== "string" || !isNonEmptyString(ar.reviewed_date))
+        throw new Error(`${ctx}: auto_review \uD544\uB4DC \uB204\uB77D/\uBD80\uC801\uD569`);
+      if (ar.status === "pass") {
+        if (!isNonEmptyString(ar.pmid) || !isNonEmptyString(ar.evidence_sentence))
+          throw new Error(`${ctx}: pass \uD310\uC815\uC740 pmid\xB7evidence_sentence \uD544\uC218 (\uADFC\uAC70 \uC5C6\uB294 \uD1B5\uACFC \uAE08\uC9C0)`);
+      } else {
+        if (!isNonEmptyString(ar.reason))
+          throw new Error(`${ctx}: fail \uD310\uC815\uC740 reason \uD544\uC218`);
+      }
+    }
     return entry;
   });
 }
