@@ -70,6 +70,7 @@ describe('aggregate — 통합 모델', () => {
     test: { ok: true, value: { passed: 21, failed: 0, total: 21 } },
     gh: { ok: false, reason: 'gh 미설치' },
     checkboxes: { 'docs/p.md': { done: 1, total: 4 } },
+    milestoneAncestry: {},
     gitSha: 'abc123',
     generatedAt: '2026-06-22T00:00:00.000Z',
   }

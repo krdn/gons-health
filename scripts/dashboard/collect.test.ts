@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { loadState, countKb, countCheckboxes, collect } from './collect'
+import { loadState, countKb, countCheckboxes, collect, anchorAncestryOfMain } from './collect'
 
 describe('loadState — 메타파일 fail-loud', () => {
   it('project.name 누락 시 throw', () => {
@@ -55,6 +55,25 @@ describe('collect — vitest 가드', () => {
     const raw = collect()
     expect(raw.test.ok).toBe(false) // 가드가 vitest 스폰 차단
     expect(raw.kb.total).toBeGreaterThan(0) // 나머지 수집은 정상
+  })
+})
+
+describe('anchorAncestryOfMain — anchor의 main 조상 판정', () => {
+  it('SHA 형식 위반은 execSync 실행 없이 absent (인젝션 방어)', () => {
+    // 세미콜론·공백 포함 → 정규식 불통과 → absent (git 명령 미실행)
+    expect(anchorAncestryOfMain('a95fbaf; rm -rf /', process.cwd())).toBe('absent')
+    expect(anchorAncestryOfMain('not-a-sha', process.cwd())).toBe('absent')
+    expect(anchorAncestryOfMain('', process.cwd())).toBe('absent')
+  })
+
+  it('main 조상 커밋은 yes', () => {
+    // a95fbaf = "merge: 살아있는 대시보드" — 이 repo main의 실제 조상
+    expect(anchorAncestryOfMain('a95fbaf', process.cwd())).toBe('yes')
+  })
+
+  it('git에 없는 유효형식 해시는 absent', () => {
+    // 형식은 맞으나 존재하지 않는 커밋
+    expect(anchorAncestryOfMain('deadbee', process.cwd())).toBe('absent')
   })
 })
 

@@ -1,5 +1,5 @@
 import { readFileSync, existsSync } from 'node:fs'
-import { execSync } from 'node:child_process'
+import { execSync, spawnSync } from 'node:child_process'
 import { join } from 'node:path'
 import type {
   ProjectState,
@@ -11,6 +11,7 @@ import type {
   GitCommit,
   TestResult,
   GhIssue,
+  Ancestry,
 } from './types'
 
 // ---- 메타파일: fail-loud ----
@@ -192,6 +193,41 @@ function gitReason(err: unknown): string {
   return err instanceof Error ? err.message : 'git 실패'
 }
 
+const SHA_RE = /^[0-9a-f]{7,40}$/ // 인젝션 방어: project-state.json은 사람 편집
+
+function commitExists(sha: string, root: string): boolean {
+  // spawnSync — 인자 배열로 전달하므로 셸 보간 없음
+  const r = spawnSync('git', ['cat-file', '-e', `${sha}^{commit}`], {
+    cwd: root,
+    timeout: 5000,
+  })
+  return r.status === 0
+}
+
+function mainRefExists(root: string): boolean {
+  const r = spawnSync('git', ['rev-parse', '--verify', 'main'], {
+    cwd: root,
+    timeout: 5000,
+  })
+  return r.status === 0
+}
+
+// anchor가 main의 조상인가. HEAD가 아니라 'main' 명시 — 대시보드는 feature 브랜치에서도
+// 재생성되므로 checked-out 브랜치에 판정이 휘둘리면 안 된다.
+export function anchorAncestryOfMain(sha: string, root: string): Ancestry {
+  if (!SHA_RE.test(sha)) return 'absent' // 형식 위반 = 유효 해시 아님
+  // spawnSync — 인자 배열로 전달, 셸 미경유
+  const r = spawnSync('git', ['merge-base', '--is-ancestor', sha, 'main'], {
+    cwd: root,
+    timeout: 5000,
+  })
+  if (r.status === 0) return 'yes' // exit 0 = 조상
+  if (r.error) return 'unknown' // 프로세스 자체 실패 (git 없음 등)
+  if (!commitExists(sha, root)) return 'absent' // 커밋 부재(오타·유실)
+  if (!mainRefExists(root)) return 'unknown' // main ref 자체 부재 = 환경 문제
+  return 'no' // 커밋 있고 main 있는데 조상 아님
+}
+
 // ---- 오케스트레이션 ----
 // tryTest는 vitest 컨텍스트(process.env.VITEST)면 스폰을 건너뛴다 →
 // 테스트에서 collect() 호출해도 중첩 vitest 재귀 없음(런타임 enforced).
@@ -220,6 +256,14 @@ export function collect(opts: { root?: string } = {}): RawData {
     }
   }
 
+  // anchor 조상 판정: anchor가 있는 마일스톤만 (git I/O는 여기서만)
+  const milestoneAncestry: Record<string, Ancestry> = {}
+  for (const m of state.milestones) {
+    if (m.anchor) {
+      milestoneAncestry[m.id] = anchorAncestryOfMain(m.anchor, root)
+    }
+  }
+
   // 보조 — 실패 격리
   const git = tryGitLog(root)
   const test = tryTest(root)
@@ -233,6 +277,7 @@ export function collect(opts: { root?: string } = {}): RawData {
     test,
     gh,
     checkboxes,
+    milestoneAncestry,
     gitSha,
     generatedAt: new Date().toISOString(),
   }
