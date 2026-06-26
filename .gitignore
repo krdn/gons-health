@@ -7,3 +7,7 @@ dist-app/
 vite.config.d.ts
 vite.config.js
 .dashboard-test-report.json
+
+# KB 검증 파이프라인 중간 산출물
+scripts/verify-queue.json
+scripts/verdicts.json

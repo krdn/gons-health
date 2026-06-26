@@ -28,6 +28,9 @@
     "test:watch": "vitest",
     "dashboard": "tsx scripts/dashboard.ts",
     "typecheck:scripts": "tsc -p scripts/tsconfig.json --noEmit",
+    "verify:kb": "tsx scripts/verifyKb.ts",
+    "verify:apply": "tsx scripts/applyVerdict.ts",
+    "verify:promote": "tsx scripts/promoteQueue.ts",
     "prepack": "pnpm build"
   },
   "devDependencies": {

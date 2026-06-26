@@ -8,6 +8,14 @@ interface Source {
     retrieved_date: string;
     quote: string;
 }
+interface AutoReview {
+    status: 'pass' | 'fail';
+    pmid: string;
+    evidence_sentence: string;
+    direction_match: boolean;
+    reason: string;
+    reviewed_date: string;
+}
 interface InteractionEntry {
     id: string;
     drug_class: string;
@@ -21,6 +29,9 @@ interface InteractionEntry {
     source: Source;
     last_reviewed: string;
     verified: boolean;
+    supplement_en?: string;
+    auto_verified?: boolean;
+    auto_review?: AutoReview;
 }
 interface AbstainResult {
     kind: 'abstain';

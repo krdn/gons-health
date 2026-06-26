@@ -96,4 +96,19 @@ describe('lookup', () => {
       expect(r.message).toBe(ABSTAIN_MESSAGE)
     }
   })
+
+  it('auto_verified=true 이지만 verified=false 인 엔트리는 lookup이 반환하지 않는다', () => {
+    const kb = [
+      {
+        ...KB[0],
+        id: 'anticoag-ginkgo-auto-unverified',
+        drug_class: '항응고제/항혈소판제',
+        supplement: '은행 (Ginkgo biloba)',
+        verified: false,
+        auto_verified: true,
+      } as any,
+    ]
+    const result = lookup(kb, '항응고제/항혈소판제', '은행 (Ginkgo biloba)')
+    expect(result.kind).toBe('abstain')
+  })
 })
