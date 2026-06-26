@@ -41,7 +41,7 @@ export function detectMilestoneDrift(
     if (m.state === 'done' && !m.anchor) {
       drifts.push({
         id: m.id, title: m.title, kind: 'done-without-anchor',
-        detail: `state=done인데 anchor 미연결 — 출시 증거 커밋을 달아야 한다`,
+        detail: `state=done인데 anchor 필드 없음 — 출시 증거 커밋 미연결`,
       })
       continue
     }
