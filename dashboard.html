@@ -220,7 +220,7 @@
 
   <!-- 보조 지표 (테스트·게이트·산출물) -->
   <div class="strip"><div class="stat good"><span class="spark">✅</span>
-        <div><div class="num">77/77</div>
+        <div><div class="num">97/97</div>
         <div class="lbl">테스트 통과 · 빌드 OK</div></div></div>
 <div class="stat neutral"><span class="spark">🔒</span>
         <div><div class="num">3</div>
@@ -237,16 +237,18 @@
       <p>마일스톤 완료 여부는 사람이 state로 판단한다(plan 체크박스는 실행 후 갱신 안 될 수 있어 1차 소스로 쓰지 않음). 진행 중 마일스톤만 plan 체크박스로 세부 진행을 보조 표시한다.</p>
       
     </div></div>
-      
+      <div class="drift-warn"><b>마일스톤 상태 드리프트 감지</b>
+    <div class="drift-sub">project-state.json의 state가 git 현실과 어긋남 — 메타파일을 수정하라.</div>
+    <div class="drift-item"><b>⚠ KB 자동 검증 파이프라인</b> — state=done인데 anchor 6c37ed0가 main에 없음 — 거짓 done</div></div>
       <div class="ms done">
         <div class="ms-head"><span class="ms-title">앵커 KB 체커 MVP</span>
           <span class="ms-state">완료</span></div>
         <div class="ms-bar"><div class="ms-fill" style="width:100%"></div></div>
       </div>
-<div class="ms parked">
+<div class="ms done">
         <div class="ms-head"><span class="ms-title">KB 자동 검증 파이프라인</span>
-          <span class="ms-state">보류</span></div>
-        <div class="ms-bar"><div class="ms-fill" style="width:0%"></div></div>
+          <span class="ms-state">완료</span></div>
+        <div class="ms-bar"><div class="ms-fill" style="width:100%"></div></div>
       </div>
 <div class="ms done">
         <div class="ms-head"><span class="ms-title">살아있는 대시보드</span>
@@ -266,13 +268,13 @@
     </div></div>
       <div class="actions"><div class="act prio"><span class="rank">1</span>
         <div><div class="a-title">약사 인터뷰 5~10명 — 수요 검증</div>
-        <div class="a-why">검증 쉬운 엔트리(철분·퀴놀론칼슘·비타민K)는 이미 승격 완료(KB 5/10). 남은 herbal 5개는 1차문헌상 승격 불가(은행 RCT 부정, 홍삼 종 불일치, 마늘·나토키나제·당귀 증례뿐)라 KB 확장이 막혔다. 다음 진척은 코드가 아니라 외부 수요 검증에서 나온다.</div></div></div>
+        <div class="a-why">검증 쉬운 엔트리(철분·퀴놀론칼슘·비타민K)는 이미 승격 완료(KB 5/10). 남은 herbal 5개는 1차문헌상 승격 불가라 KB 확장이 막혔고, m2 자동 검증 파이프라인도 도구로 완성됐다. 다음 진척은 코드가 아니라 외부 수요 검증에서 나온다.</div></div></div>
 <div class="act"><span class="rank">2</span>
         <div><div class="a-title">harness 입력 강화 스펙 구현</div>
         <div class="a-why">docs/harness-tool-input-hardening-spec-20260621.md 에 설계안 존재.</div></div></div>
 <div class="act"><span class="rank">3</span>
-        <div><div class="a-title">herbal 5개 PENDING은 근거 나올 때만 재검토</div>
-        <div class="a-why">은행·홍삼·마늘·나토키나제·당귀는 2026-06-22 검증서 승격 불가 결론. 새 1차문헌(기존 결론을 뒤집는 RCT 등) 없이 재검색 금지 — 억지 승격이 cite-or-abstain의 진짜 실패 모드.</div></div></div></div>
+        <div><div class="a-title">herbal 5개 PENDING은 근거 나올 때만 재검토 (파이프라인 사용 가능, 단 기권이 정상 결과)</div>
+        <div class="a-why">m2 파이프라인(verify:kb→apply→promote)으로 PENDING을 기계 검증할 수 있게 됐으나, 은행·홍삼·마늘·나토키나제·당귀는 2026-06-22 검증서 승격 불가 결론. 새 1차문헌(기존 결론을 뒤집는 RCT 등) 없이 억지 승격 금지 — 그게 cite-or-abstain의 진짜 실패 모드. 파이프라인을 돌려도 이 5개는 계속 기권이 정상 결과다.</div></div></div></div>
     </div>
     <div class="ops-right">
       <div class="col-title">KB 검증 현황 — 50% <button class="help-toggle" data-help="kbStatus" aria-label="도움말">?</button>
@@ -367,7 +369,15 @@
         <div class="c-body">진단·처방 아님. 약사 검토 게이트가 전제.</div></div></div>
 
     <h2><span class="sec-kicker">이력</span> 최근 작업</h2>
-    <div class="list-wrap"><div class="commit"><code>4134961</code>
+    <div class="list-wrap"><div class="commit"><code>6c37ed0</code>
+        <span>merge: KB 자동 검증 파이프라인 통합 (m2)</span></div>
+<div class="commit"><code>b06ba9b</code>
+        <span>docs: KB 자동 검증 파이프라인 통합 실행 플랜 (m2)</span></div>
+<div class="commit"><code>5efd72c</code>
+        <span>docs: KB 자동 검증 파이프라인 통합(m2 완료) 설계</span></div>
+<div class="commit"><code>9d79017</code>
+        <span>fix: done-without-anchor detail 사실형으로 (가치판단 제거)</span></div>
+<div class="commit"><code>4134961</code>
         <span>fix: 마일스톤 드리프트 해소 (m3=done·m2=parked, anchor 부여)</span></div>
 <div class="commit"><code>b1d6a0c</code>
         <span>feat: render — 마일스톤 드리프트 경고 박스 + parked 라벨</span></div>
@@ -378,22 +388,14 @@
 <div class="commit"><code>6dda7c5</code>
         <span>feat: 마일스톤 anchor·드리프트 타입 (parked state + Ancestry/MilestoneDrift)</span></div>
 <div class="commit"><code>4fe8fe1</code>
-        <span>docs: 마일스톤 드리프트 감지 구현 플랜 (5태스크 TDD)</span></div>
-<div class="commit"><code>9d07777</code>
-        <span>docs: 마일스톤 드리프트 감지 설계 (양방향 anchor 검사)</span></div>
-<div class="commit"><code>1c371af</code>
-        <span>feat: 대시보드 라이트 테마 재디자인 + 히어로 KB 카드</span></div>
-<div class="commit"><code>24d4bff</code>
-        <span>fix: 대시보드 의도 드리프트 해소 + KB 동적해설 가치판단 제거</span></div>
-<div class="commit"><code>7b0f818</code>
-        <span>feat: PENDING 엔트리 3개 1차문헌 검증·승격 (verified 2→5)</span></div></div>
+        <span>docs: 마일스톤 드리프트 감지 구현 플랜 (5태스크 TDD)</span></div></div>
 
     <h2><span class="sec-kicker">할 일</span> GitHub 이슈</h2>
     <div class="list-wrap"><div class="empty">열린 GitHub 이슈 없음</div></div>
   </div>
 
   <footer>
-    <span>생성: 2026-06-26 · 4134961</span>
+    <span>생성: 2026-06-26 · 6c37ed0</span>
     <span>npm run dashboard 로 갱신 · 의도는 project-state.json</span>
   </footer>
 </div>
