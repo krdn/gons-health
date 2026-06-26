@@ -32,21 +32,21 @@
   "nextActions": [
     {
       "rank": 1,
-      "title": "8개 PENDING 엔트리 1차문헌 검증 → verified 승격",
-      "why": "KB가 실질 2개라 도구 효용이 거의 안 나옴. evidence_level 강인 철분·퀴놀론칼슘·비타민K가 검증 쉬우면서 임팩트 큼.",
+      "title": "약사 인터뷰 5~10명 — 수요 검증",
+      "why": "검증 쉬운 엔트리(철분·퀴놀론칼슘·비타민K)는 이미 승격 완료(KB 5/10). 남은 herbal 5개는 1차문헌상 승격 불가(은행 RCT 부정, 홍삼 종 불일치, 마늘·나토키나제·당귀 증례뿐)라 KB 확장이 막혔다. 다음 진척은 코드가 아니라 외부 수요 검증에서 나온다.",
       "priority": "high"
     },
     {
       "rank": 2,
-      "title": "약사 인터뷰 5~10명 — 수요 검증",
-      "why": "B 아키텍처를 '수요는 내가 안다'로 확정했으나 외부 검증 미완.",
+      "title": "harness 입력 강화 스펙 구현",
+      "why": "docs/harness-tool-input-hardening-spec-20260621.md 에 설계안 존재.",
       "priority": "medium"
     },
     {
       "rank": 3,
-      "title": "harness 입력 강화 스펙 구현",
-      "why": "docs/harness-tool-input-hardening-spec-20260621.md 에 설계안 존재.",
-      "priority": "medium"
+      "title": "herbal 5개 PENDING은 근거 나올 때만 재검토",
+      "why": "은행·홍삼·마늘·나토키나제·당귀는 2026-06-22 검증서 승격 불가 결론. 새 1차문헌(기존 결론을 뒤집는 RCT 등) 없이 재검색 금지 — 억지 승격이 cite-or-abstain의 진짜 실패 모드.",
+      "priority": "low"
     }
   ],
   "constraints": [

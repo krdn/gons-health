@@ -23,14 +23,18 @@ describe('milestonePct — state 1차 소스', () => {
   })
 })
 
-describe('kbDynamicHelp — 동적 해설', () => {
-  it('PENDING 있으면 병목 문구 포함', () => {
+describe('kbDynamicHelp — 동적 해설 (사실만, 가치판단 없음)', () => {
+  it('PENDING 있으면 검증율·PENDING 수·효용비례를 사실로 보고한다', () => {
     const help = kbDynamicHelp({ total: 10, verified: 2, pending: 8, entries: [] })
     expect(help).toContain('20%')
     expect(help).toContain('8')
-    expect(help).toContain('병목')
+    expect(help).toContain('verified')
   })
-  it('PENDING 없으면 병목 문구 없음', () => {
+  it('PENDING을 "병목"이라 단정하지 않는다 (미검증 vs 근거상 정상기권을 코드가 구별 못 하므로 해석은 의도파일에 위임)', () => {
+    const help = kbDynamicHelp({ total: 10, verified: 2, pending: 8, entries: [] })
+    expect(help).not.toContain('병목')
+  })
+  it('PENDING 없으면 전 엔트리 검증 완료를 보고한다', () => {
     const help = kbDynamicHelp({ total: 2, verified: 2, pending: 0, entries: [] })
     expect(help).not.toContain('병목')
     expect(help).toContain('100%')
@@ -93,10 +97,11 @@ describe('aggregate — 통합 모델', () => {
     expect(model.milestones[1].detail).toBe('1/4 태스크')
   })
 
-  it('도움말 2층: 고정 + 동적', () => {
+  it('도움말 2층: 고정 + 동적 (동적은 사실 보고, raw는 verified 1/pending 2)', () => {
     const model = aggregate(raw)
     expect(model.help.kbStatus.fixed).toBe('고정설명')
-    expect(model.help.kbStatus.dynamic).toContain('병목')
+    expect(model.help.kbStatus.dynamic).toContain('PENDING 2개')
+    expect(model.help.kbStatus.dynamic).not.toContain('병목')
   })
 
   it('테스트 통과 stat 생성', () => {

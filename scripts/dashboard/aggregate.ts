@@ -26,9 +26,12 @@ export function milestonePct(m: Milestone, cb?: CheckboxCount): number {
 }
 
 export function kbDynamicHelp(kb: KbRaw): string {
+  // 사실만 보고한다. PENDING이 "미검증 병목"인지 "근거상 정상 기권"인지는
+  // KB 데이터로 구별 불가(검증 이력은 의도) → "병목" 같은 가치판단을 코드가 단정하지 않는다.
+  // 해석은 project-state.json 의 kbStatus 고정 도움말·nextActions 에 위임.
   const p = pct(kb.verified, kb.total)
   if (kb.pending > 0) {
-    return `검증 ${p}% — ${kb.pending}개 PENDING이 병목. 도구 효용은 verified(${kb.verified}개)에 비례한다.`
+    return `검증 ${p}% — PENDING ${kb.pending}개. lookup은 verified만 노출하므로 도구 효용은 verified(${kb.verified}개)에 비례한다.`
   }
   return `검증 ${p}% — 전 엔트리 검증 완료.`
 }
