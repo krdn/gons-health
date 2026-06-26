@@ -12,6 +12,7 @@ const model: DashboardModel = {
     { title: 'MVP', state: 'done', pct: 100, detail: '' },
     { title: '파이프라인', state: 'in_progress', pct: 25, detail: '1/4 태스크' },
   ],
+  milestoneDrifts: [],
   nextActions: [{ rank: 1, title: '검증', why: '효용', priority: 'high' }],
   constraints: [{ icon: '🚫', title: '배제', body: '사유' }],
   gates: [

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { pct, milestonePct, kbDynamicHelp, aggregate } from './aggregate'
-import type { RawData } from './types'
+import { pct, milestonePct, kbDynamicHelp, aggregate, detectMilestoneDrift } from './aggregate'
+import type { RawData, Milestone } from './types'
 
 describe('pct', () => {
   it('3/5 → 60', () => expect(pct(3, 5)).toBe(60))
@@ -138,5 +138,70 @@ describe('aggregate — 통합 모델', () => {
     }
     const model = aggregate(labelRaw)
     expect(model.kb.chips[0].label).toBe('항응고제 × 은행')
+  })
+})
+
+describe('detectMilestoneDrift — 양방향 state↔git 대조', () => {
+  const ms = (over: Partial<Milestone>): Milestone => ({
+    id: 'm', title: 't', state: 'todo', ...over,
+  })
+
+  it('출시됐는데 done 아님 → shipped-not-done (이 작업을 촉발한 m3 버그)', () => {
+    // anchor가 main에 있는데(yes) state는 in_progress
+    const drifts = detectMilestoneDrift(
+      [ms({ id: 'm3', title: '살아있는 대시보드', state: 'in_progress', anchor: 'a95fbaf' })],
+      { m3: 'yes' },
+    )
+    expect(drifts).toHaveLength(1)
+    expect(drifts[0].kind).toBe('shipped-not-done')
+    expect(drifts[0].id).toBe('m3')
+  })
+
+  it('done인데 main에 없음 → done-not-shipped (거짓 done)', () => {
+    const drifts = detectMilestoneDrift(
+      [ms({ id: 'm9', state: 'done', anchor: 'beef123' })],
+      { m9: 'no' },
+    )
+    expect(drifts).toHaveLength(1)
+    expect(drifts[0].kind).toBe('done-not-shipped')
+  })
+
+  it('done인데 anchor 필드 없음 → done-without-anchor', () => {
+    const drifts = detectMilestoneDrift([ms({ id: 'm9', state: 'done' })], {})
+    expect(drifts).toHaveLength(1)
+    expect(drifts[0].kind).toBe('done-without-anchor')
+  })
+
+  it('정상 done (anchor main에 있음) → 드리프트 0', () => {
+    const drifts = detectMilestoneDrift(
+      [ms({ id: 'm1', state: 'done', anchor: 'a025d6d' })],
+      { m1: 'yes' },
+    )
+    expect(drifts).toHaveLength(0)
+  })
+
+  it('parked/todo + anchor 없음 → 드리프트 0 (면제)', () => {
+    const drifts = detectMilestoneDrift(
+      [ms({ id: 'm2', state: 'parked' }), ms({ id: 'm4', state: 'todo' })],
+      {},
+    )
+    expect(drifts).toHaveLength(0)
+  })
+
+  it('anchor가 absent(커밋 오타·유실) → anchor-missing', () => {
+    const drifts = detectMilestoneDrift(
+      [ms({ id: 'm9', state: 'in_progress', anchor: 'deadbee' })],
+      { m9: 'absent' },
+    )
+    expect(drifts).toHaveLength(1)
+    expect(drifts[0].kind).toBe('anchor-missing')
+  })
+
+  it('anchor가 unknown(환경 조회 실패) → 침묵 (드리프트 0)', () => {
+    const drifts = detectMilestoneDrift(
+      [ms({ id: 'm9', state: 'done', anchor: 'a95fbaf' })],
+      { m9: 'unknown' },
+    )
+    expect(drifts).toHaveLength(0)
   })
 })

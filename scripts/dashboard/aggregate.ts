@@ -8,6 +8,8 @@ import type {
   Milestone,
   CheckboxCount,
   KbRaw,
+  Ancestry,
+  MilestoneDrift,
 } from './types'
 
 // 순수 함수. 네트워크·LLM·I/O 0. 입력 raw → 출력 모델.
@@ -23,6 +25,47 @@ export function milestonePct(m: Milestone, cb?: CheckboxCount): number {
   if (m.state === 'todo') return 0
   if (cb && cb.total > 0) return pct(cb.done, cb.total)
   return 0
+}
+
+// 순수 함수. anchor의 main 조상여부(ancestry)와 state를 양방향 대조.
+// anchor가 done에 묶이지 않음 — "출시 증거 커밋"이라 state와 독립이어야
+// 'shipped-not-done'(출시됐는데 done 아님 = m3 버그)을 잡는다.
+export function detectMilestoneDrift(
+  milestones: Milestone[],
+  ancestry: Record<string, Ancestry>,
+): MilestoneDrift[] {
+  const drifts: MilestoneDrift[] = []
+  for (const m of milestones) {
+    const anc = ancestry[m.id] // anchor 없으면 undefined
+
+    if (m.state === 'done' && !m.anchor) {
+      drifts.push({
+        id: m.id, title: m.title, kind: 'done-without-anchor',
+        detail: `state=done인데 anchor 미연결 — 출시 증거 커밋을 달아야 한다`,
+      })
+      continue
+    }
+    if (!m.anchor) continue // anchor 없는 비-done(parked/todo/in_progress)은 면제
+
+    if (anc === 'absent') {
+      drifts.push({
+        id: m.id, title: m.title, kind: 'anchor-missing',
+        detail: `anchor ${m.anchor}가 git에 없음 — 오타·유실 의심`,
+      })
+    } else if (anc === 'yes' && m.state !== 'done') {
+      drifts.push({
+        id: m.id, title: m.title, kind: 'shipped-not-done',
+        detail: `anchor ${m.anchor}가 main에 있으나 state=${m.state} — 출시됐는데 done 아님`,
+      })
+    } else if (anc === 'no' && m.state === 'done') {
+      drifts.push({
+        id: m.id, title: m.title, kind: 'done-not-shipped',
+        detail: `state=done인데 anchor ${m.anchor}가 main에 없음 — 거짓 done`,
+      })
+    }
+    // anc === 'unknown' (환경 조회 실패) → 침묵
+  }
+  return drifts
 }
 
 export function kbDynamicHelp(kb: KbRaw): string {
@@ -108,6 +151,7 @@ export function aggregate(raw: RawData): DashboardModel {
     project: raw.state.project,
     stats: buildStats(raw),
     milestones: buildMilestones(raw),
+    milestoneDrifts: detectMilestoneDrift(raw.state.milestones, raw.milestoneAncestry),
     nextActions: raw.state.nextActions,
     constraints: raw.state.constraints,
     gates: raw.state.gates,
