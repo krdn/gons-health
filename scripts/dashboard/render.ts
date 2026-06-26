@@ -46,10 +46,27 @@ function renderHeroKb(model: DashboardModel): string {
   </div>`
 }
 
+function renderMilestoneDrifts(model: DashboardModel): string {
+  if (model.milestoneDrifts.length === 0) return '' // 노이즈 0
+  const items = model.milestoneDrifts
+    .map(
+      (d) =>
+        `<div class="drift-item"><b>⚠ ${escapeHtml(d.title)}</b> — ${escapeHtml(d.detail)}</div>`,
+    )
+    .join('\n')
+  return `<div class="drift-warn"><b>마일스톤 상태 드리프트 감지</b>
+    <div class="drift-sub">project-state.json의 state가 git 현실과 어긋남 — 메타파일을 수정하라.</div>
+    ${items}</div>`
+}
+
 function renderMilestones(model: DashboardModel): string {
   return model.milestones
     .map((m) => {
-      const stateLabel = m.state === 'done' ? '완료' : m.state === 'in_progress' ? '진행 중' : '예정'
+      const stateLabel =
+        m.state === 'done' ? '완료'
+        : m.state === 'in_progress' ? '진행 중'
+        : m.state === 'parked' ? '보류'
+        : '예정'
       const detail = m.detail ? ` · ${escapeHtml(m.detail)}` : ''
       return `<div class="ms ${m.state}">
         <div class="ms-head"><span class="ms-title">${escapeHtml(m.title)}</span>
@@ -324,6 +341,11 @@ const STYLE = `
   .warn-box { margin-top: 14px; background: var(--danger-bg); border: 1px solid var(--danger);
     border-radius: 10px; padding: 12px 14px; font-size: 12.5px; line-height: 1.55; }
   .warn-box b { color: var(--danger); }
+  .drift-warn { margin: 10px 0 14px; background: var(--danger-bg); border: 1px solid var(--danger);
+    border-radius: 8px; padding: 12px 14px; font-size: 13px; }
+  .drift-warn > b { color: var(--danger); }
+  .drift-sub { color: var(--muted); margin: 4px 0 8px; font-size: 12px; }
+  .drift-item { margin-top: 6px; }
   .kb-note { font-size: 12.5px; color: var(--muted); margin: 6px 0 14px; line-height: 1.5; }
 
   /* 참조 존 구분선 */
@@ -388,6 +410,7 @@ export function render(model: DashboardModel): string {
   <div class="ops">
     <div class="ops-left">
       <div class="col-title">마일스톤 ${helpToggle('milestones', model.help['milestones'])}</div>
+      ${renderMilestoneDrifts(model)}
       ${renderMilestones(model)}
 
       <div class="col-title" style="margin-top:22px">다음 행동 ${helpToggle('nextActions', model.help['nextActions'])}</div>

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { render, escapeHtml } from './render'
+import { render as renderDashboard, escapeHtml } from './render'
 import type { DashboardModel } from './types'
 
 const model: DashboardModel = {
@@ -56,7 +56,7 @@ describe('escapeHtml', () => {
 })
 
 describe('render — HTML 무결성', () => {
-  const html = render(model)
+  const html = renderDashboard(model)
 
   it('완전한 HTML 문서', () => {
     expect(html).toContain('<!doctype html>')
@@ -148,5 +148,33 @@ describe('render — HTML 무결성', () => {
     // 동적 해설 문자열이 HTML에 2번 이상 등장 (kb-note + help-body 토글 안)
     const occurrences = html.split('동적 해설 병목').length - 1
     expect(occurrences).toBeGreaterThanOrEqual(2)
+  })
+
+  it('드리프트 있으면 경고 박스 렌더 (항상 보임)', () => {
+    const drifted: DashboardModel = {
+      ...model,
+      milestoneDrifts: [
+        { id: 'm3', title: '살아있는 대시보드', kind: 'shipped-not-done',
+          detail: 'anchor a95fbaf가 main에 있으나 state=in_progress — 출시됐는데 done 아님' },
+      ],
+    }
+    const html = renderDashboard(drifted)
+    expect(html).toContain('class="drift-warn"')
+    expect(html).toContain('출시됐는데 done 아님')
+    expect(html).toContain('살아있는 대시보드')
+  })
+
+  it('드리프트 0이면 경고 박스 안 그림 (노이즈 0)', () => {
+    const html = renderDashboard({ ...model, milestoneDrifts: [] })
+    expect(html).not.toContain('class="drift-warn"')
+  })
+
+  it('parked 마일스톤은 "보류" 라벨', () => {
+    const parked: DashboardModel = {
+      ...model,
+      milestones: [{ title: 'KB 자동검증', state: 'parked', pct: 0, detail: '' }],
+    }
+    const html = renderDashboard(parked)
+    expect(html).toContain('보류')
   })
 })
