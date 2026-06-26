@@ -81,6 +81,16 @@ describe('render — HTML 무결성', () => {
     expect(html).toContain('1/4 태스크')
   })
 
+  it('히어로 KB 카드: verified/total 강조 렌더 (renderStats 필터 침묵 방지)', () => {
+    // 히어로 카드에 verified(1)와 total(2)이 큰 숫자로 노출
+    expect(html).toContain('class="hero-kb')
+    expect(html).toContain('class="k-num">1</span>')
+    expect(html).toContain('/ 2')
+    // KB는 히어로로 빠지므로 보조 strip(stat 카드)에는 'KB' 라벨이 중복 노출되지 않아야 함.
+    // 'KB verified'는 stat lbl이 아닌 히어로 영역 텍스트로만 등장.
+    expect(html).not.toContain('class="lbl">KB')
+  })
+
   it('3중 안전 게이트 섹션 렌더 (원본 핵심 섹션)', () => {
     expect(html).toContain('verified 게이트')
     expect(html).toContain('abstain 상수')
