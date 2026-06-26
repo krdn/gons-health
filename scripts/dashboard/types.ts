@@ -8,11 +8,26 @@ export interface ProjectMeta {
   status: 'active' | 'paused' | 'shipped'
 }
 
+export type MilestoneState = 'done' | 'in_progress' | 'parked' | 'todo'
+
 export interface Milestone {
   id: string
   title: string
-  state: 'done' | 'in_progress' | 'todo'
+  state: MilestoneState
   planFile?: string // in_progress일 때 세부 진행률 계산용
+  anchor?: string // 출시 증거 커밋(단축 해시). main 조상 여부로 state와 양방향 대조
+}
+
+// anchor 커밋의 main 조상 여부.
+// yes=main 조상 / no=커밋 있으나 조상 아님 / absent=커밋이 git에 없음(오타·유실) / unknown=조회 실패(환경)
+export type Ancestry = 'yes' | 'no' | 'absent' | 'unknown'
+
+// aggregate가 산출, render가 경고로 표시.
+export interface MilestoneDrift {
+  id: string
+  title: string
+  kind: 'shipped-not-done' | 'done-not-shipped' | 'done-without-anchor' | 'anchor-missing'
+  detail: string // 사람이 읽을 한 줄(사실만, 가치판단 없음)
 }
 
 export interface NextAction {
@@ -115,6 +130,7 @@ export interface RawData {
   test: SourceResult<TestResult>
   gh: SourceResult<GhIssue[]>
   checkboxes: Record<string, CheckboxCount> // planFile 경로 → 카운트
+  milestoneAncestry: Record<string, Ancestry> // 마일스톤 id → anchor 조상여부(anchor 없으면 키 없음)
   gitSha: string // 푸터용 (실패 시 'unknown')
   generatedAt: string // ISO 문자열
 }
@@ -129,7 +145,7 @@ export interface Stat {
 
 export interface MilestoneView {
   title: string
-  state: 'done' | 'in_progress' | 'todo'
+  state: MilestoneState
   pct: number // 0~100
   detail: string // "3/5 태스크" 또는 ""
 }
@@ -150,6 +166,7 @@ export interface DashboardModel {
   project: ProjectMeta
   stats: Stat[] // 상단 strip 4개
   milestones: MilestoneView[]
+  milestoneDrifts: MilestoneDrift[] // 비면 경고 렌더 안 함
   nextActions: NextAction[]
   constraints: Constraint[]
   gates: Gate[] // 메타에서 그대로 통과
